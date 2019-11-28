@@ -24,6 +24,7 @@
 
 #include "LogoScene.h"
 #include "SimpleAudioEngine.h"
+#include "HelloWorldScene.h"
 
 USING_NS_CC;
 
@@ -42,8 +43,7 @@ static void problemLoading(const char* filename)
 // on "init" you need to initialize your instance
 bool LogoScene::init()
 {
-    //////////////////////////////
-    // 1. super init first
+
     if ( !Scene::init() )
     {
         return false;
@@ -55,20 +55,28 @@ bool LogoScene::init()
 	spriteBee->setAnchorPoint(Vec2(0, 0));
 	spriteBee->setPosition(Vec2(500, 500));
 	addChild(spriteBee);
-   
+	auto touchListener = EventListenerTouchOneByOne::create();
+	touchListener->onTouchBegan = CC_CALLBACK_2(LogoScene::OnTouchBegan, this);
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
+
+	scheduleUpdate();
     return true;
 }
 
+bool LogoScene::OnTouchBegan(cocos2d::Touch *touch, cocos2d::Event *envent) {
+	auto scene = HelloWorld::createScene();
+	Director::getInstance()->replaceScene(TransitionFade::create(0.5, scene, Color3B(0, 255, 255)));
 
-void LogoScene::menuCloseCallback(Ref* pSender)
-{
-    //Close the cocos2d-x game scene and quit the application
-    Director::getInstance()->end();
-
-    /*To navigate back to native iOS screen(if present) without quitting the application  ,do not use Director::getInstance()->end() as given above,instead trigger a custom event created in RootViewController.mm as below*/
-
-    //EventCustom customEndEvent("game_scene_close_event");
-    //_eventDispatcher->dispatchEvent(&customEndEvent);
-
+	return true;
+}
+void LogoScene::update(float deltaTime) {
+	static int count;
+	count++;
+	if (count == 100) {
+		count = 0;
+		auto scene = HelloWorld::createScene();
+		Director::getInstance()->replaceScene(TransitionFade::create(0.5, scene, Color3B(128, 0, 0)));
+		count++;
+	}
 
 }

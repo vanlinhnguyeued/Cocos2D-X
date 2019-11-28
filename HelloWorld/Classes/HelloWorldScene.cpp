@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 #include "HelloWorldScene.h"
+#include "LogoScene.h"
 #include "SimpleAudioEngine.h"
 
 USING_NS_CC;
@@ -115,6 +116,7 @@ bool HelloWorld::init()
         // add the sprite as a child to this layer
         this->addChild(sprite, 0);
     }
+	scheduleUpdate();
     return true;
 }
 
@@ -129,5 +131,17 @@ void HelloWorld::menuCloseCallback(Ref* pSender)
     //EventCustom customEndEvent("game_scene_close_event");
     //_eventDispatcher->dispatchEvent(&customEndEvent);
 
+
+}
+void HelloWorld::update(float deltaTime) {
+	static int count;
+	count++;
+	if (count == 100) {
+		count = 0;
+		auto scene = LogoScene::createScene();
+		/*Director::getInstance()->replaceScene(TransitionFade::create(0.5, scene, Color3B(128, 0, 0)));*/
+		Director::getInstance()->replaceScene(TransitionSlideInT::create(0.5, scene));
+		
+	}
 
 }

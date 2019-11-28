@@ -12,8 +12,8 @@ public:
 
     virtual bool init();
     
-    // a selector callback
-    void menuCloseCallback(cocos2d::Ref* pSender);
+	bool OnTouchBegan(cocos2d::Touch *touch, cocos2d::Event *envent);
+	void update(float delaTime);
     
     // implement the "static create()" method manually
     CREATE_FUNC(LogoScene);
