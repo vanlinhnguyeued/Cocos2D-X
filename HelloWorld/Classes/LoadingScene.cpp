@@ -1,26 +1,4 @@
-/****************************************************************************
- Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
- 
- http://www.cocos2d-x.org
- 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
+
 
 #include "LoadingScene.h"
 #include "LogoScene.h"
@@ -70,7 +48,7 @@ bool LoadingScene::init()
 	spriteBee->runAction(RepeatForever::create(animate));
 
 	//set rotate for spriteBee
-	auto rotate45 = RotateBy::create(1.1f, 45.0f);
+	auto rotate45 = RotateBy::create(3.1f, 45.0f);
 	//set move
 	auto moveBeeToTop = MoveBy::create(5, Vec2(600, 900));
 	//set Ease for spriteBee
@@ -82,13 +60,22 @@ bool LoadingScene::init()
 	auto seq = Sequence::create(move_ease_elstic2, delay, move_ease_elstic, delay, move_ease_in_back, delay->clone(), nullptr);
 	spriteBee->runAction(RepeatForever::create(seq));
 
-	//create Background
-	auto mewmew = Sprite::create("Sprites/image2.png");
+	
+	auto mewmew = Sprite::create("Sprites/mySprite.png");
 	mewmew->setAnchorPoint(Vec2(0, 0));
 	mewmew->setPosition(Vec2(0, 0));
 	addChild(mewmew, -1);
 	auto moveMewToTop1 = MoveBy::create(5, Vec2(500, 200));
 	mewmew->runAction(moveMewToTop1);
+	auto scaleDouble = ScaleTo::create(1.0f, 2.0f);
+	mewmew->runAction(scaleDouble);
+	//create Background
+	auto bg = Sprite::create("Sprites/background.png");
+	bg->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2));
+	float scale = MAX(visibleSize.width / bg->getContentSize().width, visibleSize.height / bg->getContentSize().height);
+	bg->setScale(scale);
+	addChild(bg, -2);
+
 	scheduleUpdate();
     return true;
 }
