@@ -136,11 +136,10 @@ void HelloWorld::menuCloseCallback(Ref* pSender)
 void HelloWorld::update(float deltaTime) {
 	static int count;
 	count++;
-	if (count == 100) {
+	if (count == 60) {
 		count = 0;
 		auto scene = LogoScene::createScene();
-		/*Director::getInstance()->replaceScene(TransitionFade::create(0.5, scene, Color3B(128, 0, 0)));*/
-		Director::getInstance()->replaceScene(TransitionSlideInT::create(0.5, scene));
+		Director::getInstance()->replaceScene(TransitionFade::create(0.5, scene, Color3B(128, 0, 0)));
 		
 	}
 

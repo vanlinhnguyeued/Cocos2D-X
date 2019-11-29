@@ -28,6 +28,8 @@
 
 USING_NS_CC;
 
+
+cocos2d::Sprite *spriteBee;
 Scene* LogoScene::createScene()
 {
     return LogoScene::create();
@@ -51,10 +53,17 @@ bool LogoScene::init()
 
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
-	auto spriteBee = Sprite::create("Sprites/bee1.png");
-	spriteBee->setAnchorPoint(Vec2(0, 0));
-	spriteBee->setPosition(Vec2(500, 500));
+
+
+	spriteBee=Sprite::create("Sprites/bee1.png");
+	spriteBee->setAnchorPoint(Vec2(0.5, 0.5));
+	spriteBee->setPosition(Vec2(visibleSize.width/2, visibleSize.height/2));
 	addChild(spriteBee);
+
+	//move top
+	auto moveTop = MoveBy::create(2, Vec2(0, 500));
+	spriteBee->runAction(moveTop);
+
 	auto touchListener = EventListenerTouchOneByOne::create();
 	touchListener->onTouchBegan = CC_CALLBACK_2(LogoScene::OnTouchBegan, this);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
@@ -70,13 +79,7 @@ bool LogoScene::OnTouchBegan(cocos2d::Touch *touch, cocos2d::Event *envent) {
 	return true;
 }
 void LogoScene::update(float deltaTime) {
-	static int count;
-	count++;
-	if (count == 100) {
-		count = 0;
-		auto scene = HelloWorld::createScene();
-		Director::getInstance()->replaceScene(TransitionFade::create(0.5, scene, Color3B(128, 0, 0)));
-		count++;
-	}
-
+	
+	
+	
 }

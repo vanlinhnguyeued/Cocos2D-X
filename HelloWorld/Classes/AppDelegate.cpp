@@ -120,10 +120,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     // create a scene. it's an autorelease object
     auto scene = HelloWorld::createScene();
-	auto scene1 = LogoScene::createScene();
-
-    // run
-    director->runWithScene(scene1);
+	
+    director->runWithScene(scene);
 	
 
 	
