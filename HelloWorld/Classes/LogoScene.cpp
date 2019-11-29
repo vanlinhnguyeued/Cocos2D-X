@@ -30,6 +30,7 @@ USING_NS_CC;
 
 
 cocos2d::Sprite *spriteBee;
+cocos2d::Sprite *spriteSun;
 Scene* LogoScene::createScene()
 {
     return LogoScene::create();
@@ -54,14 +55,20 @@ bool LogoScene::init()
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-
+	//set properties for bee
 	spriteBee=Sprite::create("Sprites/bee1.png");
 	spriteBee->setAnchorPoint(Vec2(0.5, 0.5));
-	spriteBee->setPosition(Vec2(visibleSize.width/2, visibleSize.height/2));
+	spriteBee->setPosition(Vec2(visibleSize.width/2, 50));
 	addChild(spriteBee);
 
-	//move top
-	auto moveTop = MoveBy::create(2, Vec2(0, 500));
+	//set properties for sun
+	spriteSun = Sprite::create("Sprites/Parallax/sun.png");
+	spriteSun->setAnchorPoint(Vec2(0.5, 0.5));
+	spriteSun->setPosition(Vec2(50, visibleSize.height / 2));
+	addChild(spriteSun);
+
+	//bee move top
+	auto moveTop = MoveBy::create(20, Vec2(0, 900));
 	spriteBee->runAction(moveTop);
 
 	auto touchListener = EventListenerTouchOneByOne::create();
