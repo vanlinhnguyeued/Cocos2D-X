@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
@@ -29,7 +29,7 @@
 USING_NS_CC;
 
 
-cocos2d::Sprite *spriteBee;
+cocos2d::Sprite *spriteRocket;
 cocos2d::Sprite *spriteSun;
 Scene* LogoScene::createScene()
 {
@@ -55,21 +55,43 @@ bool LogoScene::init()
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-	//set properties for bee
-	spriteBee=Sprite::create("Sprites/bee1.png");
-	spriteBee->setAnchorPoint(Vec2(0.5, 0.5));
-	spriteBee->setPosition(Vec2(visibleSize.width/2, 50));
-	addChild(spriteBee);
+	//set properties for spriteRocket
+	spriteRocket =Sprite::create("Sprites/logo/logo.png");
+	spriteRocket->setAnchorPoint(Vec2(0.5, 0.5));
+	spriteRocket->setPosition(Vec2(150, 150));
+	addChild(spriteRocket);
 
 	//set properties for sun
 	spriteSun = Sprite::create("Sprites/Parallax/sun.png");
 	spriteSun->setAnchorPoint(Vec2(0.5, 0.5));
 	spriteSun->setPosition(Vec2(50, visibleSize.height / 2));
 	addChild(spriteSun);
+	//spriteRocket scale 0.5
+	auto scale = ScaleTo::create(2.0f, 0.5f);
+	spriteRocket->runAction(scale);
 
-	//bee move top
-	auto moveTop = MoveBy::create(20, Vec2(0, 900));
-	spriteBee->runAction(moveTop);
+	//spriteRocket move top
+	auto moveTop = MoveTo::create(10, Vec2(0, 900));
+	spriteRocket->runAction(moveTop);
+
+	//sun rotate360
+	auto rotate360 = RotateBy::create(10.0f, 360.0f);
+	spriteSun->runAction(rotate360);
+
+	//sun scale by 2
+	auto scaleDouble = ScaleTo::create(10.0f, 2.0f);
+	spriteSun->runAction(scaleDouble);
+
+	//sun move right
+	auto moveRight = MoveBy::create(10, Vec2(1000, 500));
+	spriteSun->runAction(moveRight);
+
+	//set ease for rocket
+	auto move_ease_elstic = EaseElasticInOut::create(moveRight->clone());
+	auto move_ease_in_back = move_ease_elstic->reverse();
+	auto delay = DelayTime::create(0.5f);
+	auto seq = Sequence::create(move_ease_elstic, delay, move_ease_in_back, delay->clone(), nullptr);
+	spriteRocket->runAction(RepeatForever::create(seq));
 
 	auto touchListener = EventListenerTouchOneByOne::create();
 	touchListener->onTouchBegan = CC_CALLBACK_2(LogoScene::OnTouchBegan, this);
