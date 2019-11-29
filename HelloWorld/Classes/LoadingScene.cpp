@@ -69,8 +69,26 @@ bool LoadingScene::init()
 	auto animate = Animate::create(animation);
 	spriteBee->runAction(RepeatForever::create(animate));
 
+	//set rotate for spriteBee
+	auto rotate45 = RotateBy::create(1.1f, 45.0f);
+	//set move
+	auto moveBeeToTop = MoveBy::create(5, Vec2(600, 900));
+	//set Ease for spriteBee
+	auto move_ease_elstic = EaseElasticInOut::create(moveBeeToTop->clone());
+	auto move_ease_elstic2 = EaseElasticInOut::create(rotate45->clone());
+	auto move_ease_in_back = move_ease_elstic->reverse();
+	//auto move_ease_in_back2 = move_ease_elstic2->reverse();
+	auto delay = DelayTime::create(0.5f);
+	auto seq = Sequence::create(move_ease_elstic2, delay, move_ease_elstic, delay, move_ease_in_back, delay->clone(), nullptr);
+	spriteBee->runAction(RepeatForever::create(seq));
 
-
+	//create Background
+	auto mewmew = Sprite::create("Sprites/image2.png");
+	mewmew->setAnchorPoint(Vec2(0, 0));
+	mewmew->setPosition(Vec2(0, 0));
+	addChild(mewmew, -1);
+	auto moveMewToTop1 = MoveBy::create(5, Vec2(500, 200));
+	mewmew->runAction(moveMewToTop1);
 	scheduleUpdate();
     return true;
 }
