@@ -1,30 +1,10 @@
-﻿/****************************************************************************
- Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
- 
- http://www.cocos2d-x.org
- 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
+﻿
 
 #include "LogoScene.h"
 #include "SimpleAudioEngine.h"
 #include "HelloWorldScene.h"
+#include "LoadingScene.h"
+
 
 USING_NS_CC;
 
@@ -75,15 +55,15 @@ bool LogoScene::init()
 	spriteRocket->runAction(moveTop);
 
 	//sun rotate360
-	auto rotate360 = RotateBy::create(10.0f, 360.0f);
+	auto rotate360 = RotateBy::create(4.0f, 360.0f);
 	spriteSun->runAction(rotate360);
 
 	//sun scale by 2
-	auto scaleDouble = ScaleTo::create(10.0f, 2.0f);
+	auto scaleDouble = ScaleTo::create(4.0f, 2.0f);
 	spriteSun->runAction(scaleDouble);
 
 	//sun move right
-	auto moveRight = MoveBy::create(10, Vec2(1000, 500));
+	auto moveRight = MoveBy::create(4, Vec2(1000, 500));
 	spriteSun->runAction(moveRight);
 
 	//set ease for rocket
@@ -97,6 +77,7 @@ bool LogoScene::init()
 	touchListener->onTouchBegan = CC_CALLBACK_2(LogoScene::OnTouchBegan, this);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
 
+	this->schedule(schedule_selector(LogoScene::changeLoading), 4.0f);
 	scheduleUpdate();
     return true;
 }
@@ -109,6 +90,8 @@ bool LogoScene::OnTouchBegan(cocos2d::Touch *touch, cocos2d::Event *envent) {
 }
 void LogoScene::update(float deltaTime) {
 	
-	
-	
+}
+void LogoScene::changeLoading(float deltaTime) {
+	auto sceneLoading = LoadingScene::createScene();
+	Director::getInstance()->replaceScene(TransitionFade::create(0.5, sceneLoading, Color3B(128, 0, 0)));
 }

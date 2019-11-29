@@ -14,6 +14,7 @@ public:
     
 	bool OnTouchBegan(cocos2d::Touch *touch, cocos2d::Event *envent);
 	void update(float delaTime);
+	void changeLoading(float deltaTime);
     
     // implement the "static create()" method manually
     CREATE_FUNC(LogoScene);
