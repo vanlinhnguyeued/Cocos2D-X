@@ -75,7 +75,7 @@ bool SettingScene::init()
 
 	//Create Layout
 	auto layoutSound = ui::Layout::create();
-	layoutSound->setContentSize(cocos2d::Size(200, 100));
+	layoutSound->setContentSize(cocos2d::Size(250, 100));
 	layoutSound->setAnchorPoint(Vec2(0, 1));
 	layoutSound->setPosition(Vec2(200, 200));
 	addChild(layoutSound);
@@ -90,6 +90,25 @@ bool SettingScene::init()
 	soundSlider->setPosition(Vec2(0, 85));
 	layoutSound->addChild(soundSlider);
 
+	//create checkbox
+	auto checkboxSound = ui::CheckBox::create("stop.png","stop.png","checkbox.png","checkbox.png","stop.png");
+	checkboxSound->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type)
+	{
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			log("checkbox 1 clicked");
+			break;
+		default:
+			break;
+		}
+	});
+	checkboxSound->setContentSize(cocos2d::Size(20, 20));
+	checkboxSound->setAnchorPoint(Vec2(0, 1));
+	checkboxSound->setPosition(Vec2(220, 90));
+	layoutSound->addChild(checkboxSound);
 
 
 
