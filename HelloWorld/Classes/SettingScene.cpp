@@ -75,12 +75,21 @@ bool SettingScene::init()
 
 	//Create Layout
 	auto layoutSound = ui::Layout::create();
-	layoutSound->setContentSize(cocos2d::Size(100, 100));
+	layoutSound->setContentSize(cocos2d::Size(200, 100));
 	layoutSound->setAnchorPoint(Vec2(0, 1));
 	layoutSound->setPosition(Vec2(200, 200));
 	addChild(layoutSound);
 
-	
+	//create slider
+	static auto soundSlider = ui::Slider::create();
+	soundSlider->loadBarTexture("Sprites/slider_bar_bg.png");
+	soundSlider->loadSlidBallTextures("Sprites/slider_ball_normal.png", "Sprites/slider_ball_pressed.png", "Sprites/slider_ball_disable.png");
+	soundSlider->loadProgressBarTexture("Sprites/slider_bar_pressed.png");
+	soundSlider->setPercent(75);
+	soundSlider->setAnchorPoint(Vec2(0, 1));
+	soundSlider->setPosition(Vec2(0, 85));
+	layoutSound->addChild(soundSlider);
+
 
 
 
