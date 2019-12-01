@@ -37,13 +37,51 @@ bool SettingScene::init()
 	bgrMainMenu->setScale((targetSizeBGR.width / sizeOrigBgr.width), (targetSizeBGR.height / sizeOrigBgr.height));
 	addChild(bgrMainMenu);
 
-	//set label
+	//create label Setting
 	auto lbMenu = Label::createWithTTF("Setting", "fonts/VDOMCAS.TTF", 60);
 	lbMenu->setAnchorPoint(Vec2(0.5, 0.5));
 	lbMenu->setPosition(Vec2(280, 280));
 	lbMenu->setColor(cocos2d::Color3B(139, 0, 0));
 	lbMenu->enableOutline(cocos2d::Color4B::BLACK, 1);
 	addChild(lbMenu);
+
+	//create menu item
+	//create lbSuondItem
+	auto lbSuondItem = Label::createWithTTF("Sound:", "fonts/VDOMCAS.TTF", 20);
+	lbSuondItem->setAnchorPoint(Vec2(0.5, 0.5));
+	lbSuondItem->setColor(cocos2d::Color3B(139, 0, 0));
+	lbSuondItem->enableOutline(cocos2d::Color4B::BLACK, 1);
+	//create item sound
+	auto soundItem = MenuItemLabel::create(lbSuondItem);
+	soundItem->setPosition(Vec2(150, 180));
+
+	//create lbAboutItem
+	auto lbAboutItem = Label::createWithTTF("About:", "fonts/VDOMCAS.TTF", 20);
+	lbAboutItem->setAnchorPoint(Vec2(0.5, 0.5));
+	lbAboutItem->setColor(cocos2d::Color3B(139, 0, 0));
+	lbAboutItem->enableOutline(cocos2d::Color4B::BLACK, 1);
+	//create aboutItem
+	auto aboutItem = MenuItemLabel::create(lbAboutItem);
+	aboutItem->setPosition(Vec2(150, 140));
+
+	//create menu
+	Vector<MenuItem*> menuItems;
+	menuItems.pushBack(soundItem);
+	menuItems.pushBack(aboutItem);
+	auto menuSetting = Menu::createWithArray(menuItems);
+	menuSetting->setPosition(Vec2(0, 0));
+	addChild(menuSetting);
+
+
+	//Create Layout
+	auto layoutSound = ui::Layout::create();
+	layoutSound->setContentSize(cocos2d::Size(100, 100));
+	layoutSound->setAnchorPoint(Vec2(0, 1));
+	layoutSound->setPosition(Vec2(200, 200));
+	addChild(layoutSound);
+
+	
+
 
 
 	
@@ -57,6 +95,3 @@ bool SettingScene::init()
 void SettingScene::update(float deltaTime) {
 	
 }
-//void menuCloseCallback(cocos2d::Ref* pSender) {
-//	
-//}
