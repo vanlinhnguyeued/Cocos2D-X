@@ -1,7 +1,7 @@
 ﻿#include "SimpleAudioEngine.h"
 #include "HelloWorldScene.h"
 #include "MainMenuScene.h"
-#include "HelloWorldScene.h"
+#include "SettingScene.h"
 #include "ui/CocosGUI.h"
 
 
@@ -88,8 +88,11 @@ bool MainMenuScene::init()
 	btnSetting->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
 		switch (type)
 		{
-		case ui::Widget::TouchEventType::BEGAN:
+		case ui::Widget::TouchEventType::BEGAN: {
+			auto sceneSetting = SettingScene::createScene();
+			Director::getInstance()->replaceScene(TransitionFade::create(1, sceneSetting, Color3B(128, 0, 0)));
 			break;
+		}
 		case ui::Widget::TouchEventType::ENDED:
 			break;
 		default:
