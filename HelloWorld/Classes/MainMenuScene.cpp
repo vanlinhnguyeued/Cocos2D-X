@@ -1,6 +1,7 @@
 ﻿#include "SimpleAudioEngine.h"
 #include "HelloWorldScene.h"
 #include "MainMenuScene.h"
+#include "HelloWorldScene.h"
 #include "ui/CocosGUI.h"
 
 
@@ -60,8 +61,12 @@ bool MainMenuScene::init()
 	btnNewGame->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
 		switch (type)
 		{
-		case ui::Widget::TouchEventType::BEGAN:
-			break;
+		case ui::Widget::TouchEventType::BEGAN:{
+			auto sceneHelloWorld = HelloWorld::createScene();
+			Director::getInstance()->replaceScene(TransitionFade::create(1, sceneHelloWorld, Color3B(128, 0, 0)));
+			break; 
+		}
+			
 		case ui::Widget::TouchEventType::ENDED:
 			break;
 		default:
@@ -106,8 +111,11 @@ bool MainMenuScene::init()
 	btnExit->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
 		switch (type)
 		{
-		case ui::Widget::TouchEventType::BEGAN:
+		case ui::Widget::TouchEventType::BEGAN: {
+			Director::getInstance()->end();
 			break;
+		}
+			
 		case ui::Widget::TouchEventType::ENDED:
 			break;
 		default:
@@ -125,3 +133,6 @@ bool MainMenuScene::init()
 void MainMenuScene::update(float deltaTime) {
 	
 }
+//void menuCloseCallback(cocos2d::Ref* pSender) {
+//	
+//}
