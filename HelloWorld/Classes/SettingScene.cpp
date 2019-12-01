@@ -2,6 +2,8 @@
 #include "SettingScene.h"
 #include "ui/CocosGUI.h"
 
+using namespace cocos2d::ui;
+
 
 
 USING_NS_CC;
@@ -45,6 +47,7 @@ bool SettingScene::init()
 	lbMenu->enableOutline(cocos2d::Color4B::BLACK, 1);
 	addChild(lbMenu);
 
+
 	//create menu item
 	//create lbSuondItem
 	auto lbSuondItem = Label::createWithTTF("Sound:", "fonts/VDOMCAS.TTF", 20);
@@ -52,7 +55,7 @@ bool SettingScene::init()
 	lbSuondItem->setColor(cocos2d::Color3B(139, 0, 0));
 	lbSuondItem->enableOutline(cocos2d::Color4B::BLACK, 1);
 	//create item sound
-	auto soundItem = MenuItemLabel::create(lbSuondItem);
+	auto soundItem = MenuItemLabel::create(lbSuondItem, CC_CALLBACK_1(SettingScene::SoundOnClick, this));
 	soundItem->setPosition(Vec2(150, 180));
 
 	//create lbAboutItem
@@ -61,7 +64,7 @@ bool SettingScene::init()
 	lbAboutItem->setColor(cocos2d::Color3B(139, 0, 0));
 	lbAboutItem->enableOutline(cocos2d::Color4B::BLACK, 1);
 	//create aboutItem
-	auto aboutItem = MenuItemLabel::create(lbAboutItem);
+	auto aboutItem = MenuItemLabel::create(lbAboutItem, CC_CALLBACK_1(SettingScene::AboutOnClick, this));
 	aboutItem->setPosition(Vec2(150, 140));
 
 	//create menu
@@ -73,9 +76,33 @@ bool SettingScene::init()
 	addChild(menuSetting);
 
 
+	
+	static auto tfNamePlyer = ui::TextField::create("Name player", "fonts/VDOMCAS.TTF", 18);
+	tfNamePlyer->setColor(cocos2d::Color3B(255, 6, 6));
+	tfNamePlyer->setPosition(Vec2(400, 230));
+	addChild(tfNamePlyer);
+
+	auto btnEditName = ui::Button::create("pencil.png", "pencil.png", "pencil.png");
+	btnEditName->setPosition(Vec2(450, 230));
+	addChild(btnEditName);
+
+
+	
+
+
+	
+	scheduleUpdate();
+    return true;
+}
+
+void SettingScene::update(float deltaTime) {
+	
+}
+void SettingScene::SoundOnClick(Ref* pSender) {
+
 	//Create Layout
 	auto layoutSound = ui::Layout::create();
-	layoutSound->setContentSize(cocos2d::Size(250, 100));
+	layoutSound->setContentSize(cocos2d::Size(250, 50));
 	layoutSound->setAnchorPoint(Vec2(0, 1));
 	layoutSound->setPosition(Vec2(200, 200));
 	addChild(layoutSound);
@@ -87,11 +114,11 @@ bool SettingScene::init()
 	soundSlider->loadProgressBarTexture("Sprites/slider_bar_pressed.png");
 	soundSlider->setPercent(75);
 	soundSlider->setAnchorPoint(Vec2(0, 1));
-	soundSlider->setPosition(Vec2(0, 85));
+	soundSlider->setPosition(Vec2(0, 35));
 	layoutSound->addChild(soundSlider);
 
 	//create checkbox
-	auto checkboxSound = ui::CheckBox::create("stop.png","stop.png","checkbox.png","checkbox.png","stop.png");
+	auto checkboxSound = ui::CheckBox::create("stop.png", "stop.png", "checkbox.png", "checkbox.png", "stop.png");
 	checkboxSound->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type)
 	{
 		switch (type)
@@ -105,21 +132,58 @@ bool SettingScene::init()
 			break;
 		}
 	});
-	checkboxSound->setContentSize(cocos2d::Size(20, 20));
 	checkboxSound->setAnchorPoint(Vec2(0, 1));
-	checkboxSound->setPosition(Vec2(220, 90));
+	checkboxSound->setPosition(Vec2(220, 40));
 	layoutSound->addChild(checkboxSound);
 
-
-
-	
-
-
-	
-	scheduleUpdate();
-    return true;
 }
+void SettingScene::AboutOnClick(Ref* pSender) {
+	//Create Layout
+	auto layoutAbout = ui::Layout::create();
+	layoutAbout->setContentSize(cocos2d::Size(250, 200));
+	layoutAbout->setAnchorPoint(Vec2(0, 1));
+	layoutAbout->setPosition(Vec2(200, 140));
+	addChild(layoutAbout);
 
-void SettingScene::update(float deltaTime) {
+	//Create ScrollView
+	auto scrollView = ui::ScrollView::create();
+	scrollView->setDirection(ui::ScrollView::Direction::VERTICAL);
+	scrollView->setContentSize(Size(layoutAbout->getContentSize().width, layoutAbout->getContentSize().height));
+	scrollView->setBounceEnabled(true);
+	layoutAbout->setAnchorPoint(Vec2(0, 1));
+	scrollView->setPosition(Vec2(0, 0));
+	scrollView->setInnerContainerSize(Size(1280, 2500));
 	
+	/*auto about1 = Label::createWithTTF("Genre(s): Platform", "fonts/VDOMCAS.TTF", 18);
+	about1->setPosition(Vec2(scrollView->getContentSize().width / 10, 10));
+	scrollView->addChild(about1);
+	auto about2 = Label::createWithTTF("Developer(s): Nintendo EAD (1985–2015)", "fonts/VDOMCAS.TTF", 18);
+	scrollView->addChild(about1);
+	about2->setPosition(Vec2(scrollView->getContentSize().width / 10, 50));
+	scrollView->addChild(about2);
+	auto about3 = Label::createWithTTF("Publisher(s): Nintendo", "fonts/VDOMCAS.TTF", 18);
+	scrollView->addChild(about3);
+	about3->setPosition(Vec2(scrollView->getContentSize().width / 10, 100));
+	auto about4 = Label::createWithTTF("Creator(s): Shigeru Miyamoto", "fonts/VDOMCAS.TTF", 18);
+	scrollView->addChild(about4);
+	about4->setPosition(Vec2(scrollView->getContentSize().width / 10,150));
+	auto about5 = Label::createWithTTF("Composer(s): Koji Kondo", "fonts/VDOMCAS.TTF", 18);
+	scrollView->addChild(about5);
+	about5->setPosition(Vec2(scrollView->getContentSize().width / 10, 200));
+	auto about6 = Label::createWithTTF("Latest release: Super Mario Maker 2", "fonts/VDOMCAS.TTF", 18);
+	scrollView->addChild(about6);
+	about6->setPosition(Vec2(scrollView->getContentSize().width / 10, 250));
+	Vector<Label*> labelItem;
+	labelItem.pushBack(about1);
+	labelItem.pushBack(about2);
+	labelItem.pushBack(about3);
+	labelItem.pushBack(about4);
+	labelItem.pushBack(about5);
+	labelItem.pushBack(about6);
+
+	scrollView->addChild(labelItem);
+	*/
+
+	layoutAbout->addChild(scrollView);
+
 }
