@@ -77,7 +77,7 @@ bool LogoScene::init()
 	touchListener->onTouchBegan = CC_CALLBACK_2(LogoScene::OnTouchBegan, this);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
 
-	this->schedule(schedule_selector(LogoScene::changeLoading), 4.0f);
+	this->schedule(schedule_selector(LogoScene::changeLoading), 3.0f);
 	scheduleUpdate();
     return true;
 }
