@@ -127,7 +127,33 @@ bool MainMenuScene::init()
 	});
 	addChild(btnExit);
 
+	auto spriteRedCache = SpriteFrameCache::getInstance();
+	spriteRedCache->addSpriteFramesWithFile("red.plist", "red.png");
 
+	const int numSpriteRed = 14;
+	auto spriteRed = Sprite::createWithSpriteFrameName("1_0.png");
+	spriteRed->setPosition(280, 80);
+	addChild(spriteRed);
+	//create animate
+	Vector<SpriteFrame*> animationRed;
+	animationRed.reserve(numSpriteRed);
+	animationRed.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("1_0.png"));
+	animationRed.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("1_1.png"));
+	animationRed.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("1_2.png"));
+	animationRed.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("1_3.png"));
+	animationRed.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("1_4.png"));
+	animationRed.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("1_5.png"));
+	animationRed.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("1_6.png"));
+	animationRed.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("1_7.png"));
+	animationRed.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("1_8.png"));
+	animationRed.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("1_9.png"));
+	animationRed.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("1_10.png"));
+	animationRed.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("1_11.png"));
+	animationRed.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("1_12.png"));
+	animationRed.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("1_13.png"));
+	auto animation = Animation::createWithSpriteFrames(animationRed, 0.1f);
+	auto animate = Animate::create(animation);
+	spriteRed->runAction(RepeatForever::create(animate));
 	
 	scheduleUpdate();
     return true;

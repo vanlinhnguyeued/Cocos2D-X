@@ -174,6 +174,7 @@ bool SettingScene::init()
 	btnEditName->setPosition(Vec2(450, 230));
 	addChild(btnEditName);
 
+	// add button done
 	auto lbDone = Label::createWithTTF("Done", "fonts/VDOMCAS.TTF", 20);
 	lbDone->setColor(cocos2d::Color3B(139, 0, 0));
 	lbDone->enableOutline(cocos2d::Color4B::BLACK, 1);
