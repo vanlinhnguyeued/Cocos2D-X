@@ -1,6 +1,7 @@
 ﻿#include "SimpleAudioEngine.h"
 #include "ui/CocosGUI.h"
 #include "GamePlayScene.h"
+#include <math.h>
 
 using namespace cocos2d::ui;
 
@@ -66,7 +67,8 @@ bool GamePlayScene::init()
 
 	auto controlSpaceShip = EventListenerTouchOneByOne::create();
 	controlSpaceShip->onTouchBegan = [](Touch* touch, Event* event) {
-		auto moveSpaceShip = MoveTo::create(1, touch->getLocation());
+		auto time = sqrt(pow(touch->getLocation().x - spriteSpaceShip->getPosition().x, 2)+ pow(touch->getLocation().y - spriteSpaceShip->getPosition().y, 2))/300;
+		auto moveSpaceShip = MoveTo::create(time, touch->getLocation());
 		spriteSpaceShip->runAction(moveSpaceShip);
 
 		return true;
