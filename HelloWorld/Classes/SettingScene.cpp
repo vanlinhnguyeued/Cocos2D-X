@@ -8,6 +8,7 @@ using namespace cocos2d::ui;
 
 USING_NS_CC;
 
+static cocos2d::ui::Layout* layoutSound;
 Scene* SettingScene::createScene()
 {
     return SettingScene::create();
@@ -47,6 +48,44 @@ bool SettingScene::init()
 	lbMenu->enableOutline(cocos2d::Color4B::BLACK, 1);
 	addChild(lbMenu);
 
+	//Create Layout
+
+	layoutSound = ui::Layout::create();
+	layoutSound->setContentSize(cocos2d::Size(250, 50));
+	layoutSound->setAnchorPoint(Vec2(0, 1));
+	layoutSound->setPosition(Vec2(200, 200));
+	addChild(layoutSound);
+
+	//create slider
+	auto soundSlider = ui::Slider::create();
+	soundSlider->loadBarTexture("Sprites/slider_bar_bg.png");
+	soundSlider->loadSlidBallTextures("Sprites/slider_ball_normal.png", "Sprites/slider_ball_pressed.png", "Sprites/slider_ball_disable.png");
+	soundSlider->loadProgressBarTexture("Sprites/slider_bar_pressed.png");
+	soundSlider->setPercent(75);
+	soundSlider->setAnchorPoint(Vec2(0, 1));
+	soundSlider->setPosition(Vec2(0, 35));
+	layoutSound->addChild(soundSlider);
+
+	//create checkbox
+	auto checkboxSound = ui::CheckBox::create("stop.png", "stop.png", "checkbox.png", "checkbox.png", "stop.png");
+	checkboxSound->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type)
+	{
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			log("checkbox 1 clicked");
+			break;
+		default:
+			break;
+		}
+	});
+	checkboxSound->setAnchorPoint(Vec2(0, 1));
+	checkboxSound->setPosition(Vec2(220, 40));
+	layoutSound->addChild(checkboxSound);
+	layoutSound->setVisible(false);
+	
 
 	//create menu item
 	//create lbSuondItem
@@ -100,41 +139,11 @@ void SettingScene::update(float deltaTime) {
 }
 void SettingScene::SoundOnClick(Ref* pSender) {
 
-	//Create Layout
-	auto layoutSound = ui::Layout::create();
-	layoutSound->setContentSize(cocos2d::Size(250, 50));
-	layoutSound->setAnchorPoint(Vec2(0, 1));
-	layoutSound->setPosition(Vec2(200, 200));
-	addChild(layoutSound);
-
-	//create slider
-	static auto soundSlider = ui::Slider::create();
-	soundSlider->loadBarTexture("Sprites/slider_bar_bg.png");
-	soundSlider->loadSlidBallTextures("Sprites/slider_ball_normal.png", "Sprites/slider_ball_pressed.png", "Sprites/slider_ball_disable.png");
-	soundSlider->loadProgressBarTexture("Sprites/slider_bar_pressed.png");
-	soundSlider->setPercent(75);
-	soundSlider->setAnchorPoint(Vec2(0, 1));
-	soundSlider->setPosition(Vec2(0, 35));
-	layoutSound->addChild(soundSlider);
-
-	//create checkbox
-	auto checkboxSound = ui::CheckBox::create("stop.png", "stop.png", "checkbox.png", "checkbox.png", "stop.png");
-	checkboxSound->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type)
-	{
-		switch (type)
-		{
-		case ui::Widget::TouchEventType::BEGAN:
-			break;
-		case ui::Widget::TouchEventType::ENDED:
-			log("checkbox 1 clicked");
-			break;
-		default:
-			break;
+		
+		if (layoutSound->isVisible() == false) {
+			layoutSound->setVisible(true);
 		}
-	});
-	checkboxSound->setAnchorPoint(Vec2(0, 1));
-	checkboxSound->setPosition(Vec2(220, 40));
-	layoutSound->addChild(checkboxSound);
+		else layoutSound->setVisible(false);
 
 }
 void SettingScene::AboutOnClick(Ref* pSender) {
