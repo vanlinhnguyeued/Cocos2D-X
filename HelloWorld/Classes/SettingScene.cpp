@@ -107,10 +107,10 @@ bool SettingScene::init()
 	about1->setAnchorPoint(Vec2(0, 0.5));
 	about1->setPosition(Vec2(10, 180));
 	scrollView->addChild(about1);
-	/*auto about2 = Label::createWithTTF("Developer(s): Nintendo EAD (1985–2015)", "fonts/VDOMCAS.TTF", 18);
+	auto about2 = Label::createWithTTF("Developer(s): Nintendo EAD (1985–2015)", "fonts/VDOMCAS.TTF", 18);
 	about2->setPosition(Vec2(80, 160));
 	scrollView->addChild(about2);
-	about2->setPosition(Vec2(scrollView->getContentSize().width / 10, 50));
+	/*about2->setPosition(Vec2(scrollView->getContentSize().width / 10, 50));
 	scrollView->addChild(about2);
 	auto about3 = Label::createWithTTF("Publisher(s): Nintendo", "fonts/VDOMCAS.TTF", 18);
 	scrollView->addChild(about3);

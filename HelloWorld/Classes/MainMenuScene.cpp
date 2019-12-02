@@ -132,7 +132,7 @@ bool MainMenuScene::init()
 
 	const int numSpriteRed = 14;
 	auto spriteRed = Sprite::createWithSpriteFrameName("1_0.png");
-	spriteRed->setPosition(280, 80);
+	spriteRed->setPosition(260, 200);
 	addChild(spriteRed);
 	//create animate
 	Vector<SpriteFrame*> animationRed;
@@ -155,6 +155,31 @@ bool MainMenuScene::init()
 	auto animate = Animate::create(animation);
 	spriteRed->runAction(RepeatForever::create(animate));
 	
+	auto spriteLoadingCache = SpriteFrameCache::getInstance();
+	spriteLoadingCache->addSpriteFramesWithFile("loading.plist", "loading.png");
+
+	const int numSpriteLoading = 11;
+	auto spriteLoading = Sprite::createWithSpriteFrameName("frame-0.png");
+	spriteLoading->setPosition(280, 50);
+	addChild(spriteLoading);
+	//create animate
+	Vector<SpriteFrame*> animationLoading;
+	animationLoading.reserve(numSpriteLoading);
+	animationLoading.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("frame-0.png"));
+	animationLoading.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("frame-1.png"));
+	animationLoading.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("frame-2.png"));
+	animationLoading.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("frame-3.png"));
+	animationLoading.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("frame-4.png"));
+	animationLoading.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("frame-5.png"));
+	animationLoading.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("frame-6.png"));
+	animationLoading.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("frame-7.png"));
+	animationLoading.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("frame-8.png"));
+	animationLoading.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("frame-9.png"));
+	animationLoading.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("frame-10.png"));
+	auto animationLoading1 = Animation::createWithSpriteFrames(animationLoading, 0.05f);
+	auto animateLoading = Animate::create(animationLoading1);
+	spriteLoading->runAction(RepeatForever::create(animateLoading));
+
 	scheduleUpdate();
     return true;
 }
