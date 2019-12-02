@@ -9,6 +9,7 @@ using namespace cocos2d::ui;
 USING_NS_CC;
 
 static cocos2d::ui::Layout* layoutSound;
+static cocos2d::ui::Layout* layoutAbout;
 Scene* SettingScene::createScene()
 {
     return SettingScene::create();
@@ -48,14 +49,13 @@ bool SettingScene::init()
 	lbMenu->enableOutline(cocos2d::Color4B::BLACK, 1);
 	addChild(lbMenu);
 
-	//Create Layout
 
+	//Create LayoutSound
 	layoutSound = ui::Layout::create();
 	layoutSound->setContentSize(cocos2d::Size(250, 50));
 	layoutSound->setAnchorPoint(Vec2(0, 1));
 	layoutSound->setPosition(Vec2(200, 200));
 	addChild(layoutSound);
-
 	//create slider
 	auto soundSlider = ui::Slider::create();
 	soundSlider->loadBarTexture("Sprites/slider_bar_bg.png");
@@ -65,7 +65,6 @@ bool SettingScene::init()
 	soundSlider->setAnchorPoint(Vec2(0, 1));
 	soundSlider->setPosition(Vec2(0, 35));
 	layoutSound->addChild(soundSlider);
-
 	//create checkbox
 	auto checkboxSound = ui::CheckBox::create("stop.png", "stop.png", "checkbox.png", "checkbox.png", "stop.png");
 	checkboxSound->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type)
@@ -86,6 +85,55 @@ bool SettingScene::init()
 	layoutSound->addChild(checkboxSound);
 	layoutSound->setVisible(false);
 	
+	
+	
+	//Create Layout About
+	layoutAbout = ui::Layout::create();
+	layoutAbout->setContentSize(cocos2d::Size(250, 200));
+	layoutAbout->setAnchorPoint(Vec2(0, 1));
+	layoutAbout->setPosition(Vec2(200, 160));
+	addChild(layoutAbout);
+	//Create ScrollView
+	auto scrollView = ui::ScrollView::create();
+	scrollView->setDirection(ui::ScrollView::Direction::VERTICAL);
+	scrollView->setContentSize(Size(layoutAbout->getContentSize().width, layoutAbout->getContentSize().height));
+	scrollView->setBounceEnabled(true);
+	scrollView->setAnchorPoint(Vec2(0, 1));
+	scrollView->setPosition(Vec2(0, 200));
+	scrollView->setInnerContainerSize(Size(250, 200));
+	//add item to scroll
+	auto about1 = Label::createWithTTF("Genre(s): Platform", "fonts/VDOMCAS.TTF", 18);
+	about1->setAnchorPoint(Vec2(0, 0.5));
+	about1->setPosition(Vec2(10, 180));
+	scrollView->addChild(about1);
+	/*auto about2 = Label::createWithTTF("Developer(s): Nintendo EAD (1985–2015)", "fonts/VDOMCAS.TTF", 18);
+	about2->setPosition(Vec2(80, 160));
+	scrollView->addChild(about2);
+	about2->setPosition(Vec2(scrollView->getContentSize().width / 10, 50));
+	scrollView->addChild(about2);
+	auto about3 = Label::createWithTTF("Publisher(s): Nintendo", "fonts/VDOMCAS.TTF", 18);
+	scrollView->addChild(about3);
+	about3->setPosition(Vec2(scrollView->getContentSize().width / 10, 100));
+	auto about4 = Label::createWithTTF("Creator(s): Shigeru Miyamoto", "fonts/VDOMCAS.TTF", 18);
+	scrollView->addChild(about4);
+	about4->setPosition(Vec2(scrollView->getContentSize().width / 10,150));
+	auto about5 = Label::createWithTTF("Composer(s): Koji Kondo", "fonts/VDOMCAS.TTF", 18);
+	scrollView->addChild(about5);
+	about5->setPosition(Vec2(scrollView->getContentSize().width / 10, 200));
+	auto about6 = Label::createWithTTF("Latest release: Super Mario Maker 2", "fonts/VDOMCAS.TTF", 18);
+	scrollView->addChild(about6);
+	about6->setPosition(Vec2(scrollView->getContentSize().width / 10, 250));
+	Vector<Label*> labelItem;
+	labelItem.pushBack(about1);
+	labelItem.pushBack(about2);
+	labelItem.pushBack(about3);
+	labelItem.pushBack(about4);
+	labelItem.pushBack(about5);
+	labelItem.pushBack(about6);
+	scrollView->addChild(labelItem);
+	*/
+	layoutAbout->addChild(scrollView);
+	layoutAbout->setVisible(false);
 
 	//create menu item
 	//create lbSuondItem
@@ -147,52 +195,9 @@ void SettingScene::SoundOnClick(Ref* pSender) {
 
 }
 void SettingScene::AboutOnClick(Ref* pSender) {
-	//Create Layout
-	auto layoutAbout = ui::Layout::create();
-	layoutAbout->setContentSize(cocos2d::Size(250, 200));
-	layoutAbout->setAnchorPoint(Vec2(0, 1));
-	layoutAbout->setPosition(Vec2(200, 140));
-	addChild(layoutAbout);
-
-	//Create ScrollView
-	auto scrollView = ui::ScrollView::create();
-	scrollView->setDirection(ui::ScrollView::Direction::VERTICAL);
-	scrollView->setContentSize(Size(layoutAbout->getContentSize().width, layoutAbout->getContentSize().height));
-	scrollView->setBounceEnabled(true);
-	layoutAbout->setAnchorPoint(Vec2(0, 1));
-	scrollView->setPosition(Vec2(0, 0));
-	scrollView->setInnerContainerSize(Size(1280, 2500));
 	
-	/*auto about1 = Label::createWithTTF("Genre(s): Platform", "fonts/VDOMCAS.TTF", 18);
-	about1->setPosition(Vec2(scrollView->getContentSize().width / 10, 10));
-	scrollView->addChild(about1);
-	auto about2 = Label::createWithTTF("Developer(s): Nintendo EAD (1985–2015)", "fonts/VDOMCAS.TTF", 18);
-	scrollView->addChild(about1);
-	about2->setPosition(Vec2(scrollView->getContentSize().width / 10, 50));
-	scrollView->addChild(about2);
-	auto about3 = Label::createWithTTF("Publisher(s): Nintendo", "fonts/VDOMCAS.TTF", 18);
-	scrollView->addChild(about3);
-	about3->setPosition(Vec2(scrollView->getContentSize().width / 10, 100));
-	auto about4 = Label::createWithTTF("Creator(s): Shigeru Miyamoto", "fonts/VDOMCAS.TTF", 18);
-	scrollView->addChild(about4);
-	about4->setPosition(Vec2(scrollView->getContentSize().width / 10,150));
-	auto about5 = Label::createWithTTF("Composer(s): Koji Kondo", "fonts/VDOMCAS.TTF", 18);
-	scrollView->addChild(about5);
-	about5->setPosition(Vec2(scrollView->getContentSize().width / 10, 200));
-	auto about6 = Label::createWithTTF("Latest release: Super Mario Maker 2", "fonts/VDOMCAS.TTF", 18);
-	scrollView->addChild(about6);
-	about6->setPosition(Vec2(scrollView->getContentSize().width / 10, 250));
-	Vector<Label*> labelItem;
-	labelItem.pushBack(about1);
-	labelItem.pushBack(about2);
-	labelItem.pushBack(about3);
-	labelItem.pushBack(about4);
-	labelItem.pushBack(about5);
-	labelItem.pushBack(about6);
-
-	scrollView->addChild(labelItem);
-	*/
-
-	layoutAbout->addChild(scrollView);
-
+	if (layoutAbout->isVisible() == false) {
+		layoutAbout->setVisible(true);
+	}
+	else layoutAbout->setVisible(false);
 }
