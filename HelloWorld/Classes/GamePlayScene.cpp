@@ -80,6 +80,26 @@ bool GamePlayScene::init()
 	};
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(controlSpaceShip1, this);
 
+	auto eventListener = EventListenerKeyboard::create();
+	eventListener->onKeyPressed = [](EventKeyboard::KeyCode keyCode, Event* event) {
+		switch (keyCode) {
+		case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
+			spriteSpaceShip->setPosition(Vec2(spriteSpaceShip->getPosition().x - 10.0f, spriteSpaceShip->getPosition().y));
+			break;
+		case EventKeyboard::KeyCode::KEY_UP_ARROW:
+			spriteSpaceShip->setPosition(Vec2(spriteSpaceShip->getPosition().x , spriteSpaceShip->getPosition().y + 10.0f));
+			break;
+		case EventKeyboard::KeyCode::KEY_DOWN_ARROW:
+			spriteSpaceShip->setPosition(Vec2(spriteSpaceShip->getPosition().x, spriteSpaceShip->getPosition().y - 10.0f));
+			break;
+		case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
+			spriteSpaceShip->setPosition(Vec2(spriteSpaceShip->getPosition().x + 10.0f, spriteSpaceShip->getPosition().y));
+			break;
+		}
+	};
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener, this);
+
+
 	scheduleUpdate();
     return true;
 }
