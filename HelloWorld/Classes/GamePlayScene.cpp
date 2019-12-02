@@ -65,15 +65,21 @@ bool GamePlayScene::init()
 	auto animateSpaceShip = Animate::create(animationSpceShip);
 	spriteSpaceShip->runAction(RepeatForever::create(animateSpaceShip));
 
-	auto controlSpaceShip = EventListenerTouchOneByOne::create();
-	controlSpaceShip->onTouchBegan = [](Touch* touch, Event* event) {
-		auto time = sqrt(pow(touch->getLocation().x - spriteSpaceShip->getPosition().x, 2)+ pow(touch->getLocation().y - spriteSpaceShip->getPosition().y, 2))/300;
+
+	//OntouchBeGan
+	auto controlSpaceShip1 = EventListenerTouchOneByOne::create();
+	controlSpaceShip1->onTouchBegan = [](Touch* touch, Event* event) {
+		auto time = sqrt(pow(touch->getLocation().x - spriteSpaceShip->getPosition().x, 2)+ pow(touch->getLocation().y - spriteSpaceShip->getPosition().y, 2))/1000;
 		auto moveSpaceShip = MoveTo::create(time, touch->getLocation());
 		spriteSpaceShip->runAction(moveSpaceShip);
-
 		return true;
 	};
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(controlSpaceShip, this);
+	//OntouchMoved
+	controlSpaceShip1->onTouchMoved = [](Touch* touch, Event* event) {
+		spriteSpaceShip->setPosition(spriteSpaceShip->getPosition()+touch->getDelta());
+	};
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(controlSpaceShip1, this);
+
 	scheduleUpdate();
     return true;
 }
