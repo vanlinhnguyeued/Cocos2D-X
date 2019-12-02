@@ -36,10 +36,25 @@ bool GamePlayScene::init()
 	bgrGP->setPosition(Vec2(0, 0));
 	bgrGP->setAnchorPoint(Vec2(0, 0));
 	//set size for bgr
-	auto targetSizeBGR = Size(560.0f, 320.0f);
+	auto targetSizeBGR = Size(860.0f, 320.0f);
 	auto sizeOrigBgr = bgrGP->getContentSize();
 	bgrGP->setScale((targetSizeBGR.width / sizeOrigBgr.width), (targetSizeBGR.height / sizeOrigBgr.height));
 	addChild(bgrGP);
+
+	auto scaleBGR = ScaleBy::create(5, 1.5);
+	auto fadeOut = FadeOut::create(5);
+	bgrGP->runAction(fadeOut);
+	bgrGP->runAction(RepeatForever::create(scaleBGR));
+
+	auto rock1 = Sprite::create("Sprites/Rock/aestroid_brown.png");
+	rock1->setAnchorPoint(Vec2(0, 0));
+	rock1->setPosition(Vec2(400, 200));
+	addChild(rock1);
+	auto fadeInRock = FadeIn::create(3.0f);
+	auto scaleRock = ScaleBy::create(3, 3);
+	auto moveRock = MoveTo::create(3, Vec2(0, 0));
+	auto spRock = Spawn::create(fadeInRock, scaleRock, moveRock, nullptr);
+	rock1->runAction(RepeatForever::create(spRock));
 
 	auto spritespaceshipgCache = SpriteFrameCache::getInstance();
 	spritespaceshipgCache->addSpriteFramesWithFile("ship.plist", "ship.png");
@@ -67,21 +82,21 @@ bool GamePlayScene::init()
 
 
 	//OntouchBeGan
-	auto controlSpaceShip1 = EventListenerTouchOneByOne::create();
-	controlSpaceShip1->onTouchBegan = [](Touch* touch, Event* event) {
+	auto controlSpaceShipByTouch = EventListenerTouchOneByOne::create();
+	controlSpaceShipByTouch->onTouchBegan = [](Touch* touch, Event* event) {
 		auto time = sqrt(pow(touch->getLocation().x - spriteSpaceShip->getPosition().x, 2)+ pow(touch->getLocation().y - spriteSpaceShip->getPosition().y, 2))/1000;
 		auto moveSpaceShip = MoveTo::create(time, touch->getLocation());
 		spriteSpaceShip->runAction(moveSpaceShip);
 		return true;
 	};
 	//OntouchMoved
-	controlSpaceShip1->onTouchMoved = [](Touch* touch, Event* event) {
+	controlSpaceShipByTouch->onTouchMoved = [](Touch* touch, Event* event) {
 		spriteSpaceShip->setPosition(spriteSpaceShip->getPosition()+touch->getDelta());
 	};
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(controlSpaceShip1, this);
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(controlSpaceShipByTouch, this);
 
-	auto eventListener = EventListenerKeyboard::create();
-	eventListener->onKeyPressed = [](EventKeyboard::KeyCode keyCode, Event* event) {
+	auto controlSpaceShipByKB = EventListenerKeyboard::create();
+	controlSpaceShipByKB->onKeyPressed = [](EventKeyboard::KeyCode keyCode, Event* event) {
 		switch (keyCode) {
 		case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
 			spriteSpaceShip->setPosition(Vec2(spriteSpaceShip->getPosition().x - 10.0f, spriteSpaceShip->getPosition().y));
@@ -97,8 +112,7 @@ bool GamePlayScene::init()
 			break;
 		}
 	};
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener, this);
-
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(controlSpaceShipByKB, this);
 
 	scheduleUpdate();
     return true;
