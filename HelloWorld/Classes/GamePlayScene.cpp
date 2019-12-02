@@ -9,7 +9,9 @@ using namespace cocos2d::ui;
 
 USING_NS_CC;
 
+cocos2d::MoveTo* moveRock;
 cocos2d::Sprite* spriteSpaceShip;
+cocos2d::Sprite* rock1;
 Scene* GamePlayScene::createScene()
 {
     return GamePlayScene::create();
@@ -46,15 +48,14 @@ bool GamePlayScene::init()
 	bgrGP->runAction(fadeOut);
 	bgrGP->runAction(RepeatForever::create(scaleBGR));
 
-	auto rock1 = Sprite::create("Sprites/Rock/aestroid_brown.png");
+	rock1 = Sprite::create("Sprites/Rock/aestroid_brown.png");
 	rock1->setAnchorPoint(Vec2(0, 0));
 	rock1->setPosition(Vec2(400, 200));
 	addChild(rock1);
-	auto fadeInRock = FadeIn::create(3.0f);
-	auto scaleRock = ScaleBy::create(3, 3);
-	auto moveRock = MoveTo::create(3, Vec2(0, 0));
-	auto spRock = Spawn::create(fadeInRock, scaleRock, moveRock, nullptr);
-	rock1->runAction(RepeatForever::create(spRock));
+
+	moveRock = MoveTo::create(3, Vec2(0, 0));
+	rock1->runAction(RepeatForever::create(moveRock));
+	
 
 	auto spritespaceshipgCache = SpriteFrameCache::getInstance();
 	spritespaceshipgCache->addSpriteFramesWithFile("ship.plist", "ship.png");
@@ -119,5 +120,8 @@ bool GamePlayScene::init()
 }
 
 void GamePlayScene::update(float deltaTime) {
-	
+	if (rock1->getPosition().x <= 1 && rock1->getPosition().y <= 1) {
+		rock1->setPosition(Vec2(400, 200));
+	}
+	//rock1->runAction(moveRock);
 }
