@@ -1,6 +1,7 @@
 ﻿#include "SimpleAudioEngine.h"
 #include "SettingScene.h"
 #include "ui/CocosGUI.h"
+#include "MainMenuScene.h"
 
 using namespace cocos2d::ui;
 
@@ -163,8 +164,8 @@ bool SettingScene::init()
 	addChild(menuSetting);
 
 
-	
-	static auto tfNamePlyer = ui::TextField::create("Name player", "fonts/VDOMCAS.TTF", 18);
+	//add text field
+	auto tfNamePlyer = ui::TextField::create("Name player", "fonts/VDOMCAS.TTF", 18);
 	tfNamePlyer->setColor(cocos2d::Color3B(255, 6, 6));
 	tfNamePlyer->setPosition(Vec2(400, 230));
 	addChild(tfNamePlyer);
@@ -173,6 +174,28 @@ bool SettingScene::init()
 	btnEditName->setPosition(Vec2(450, 230));
 	addChild(btnEditName);
 
+	auto lbDone = Label::createWithTTF("Done", "fonts/VDOMCAS.TTF", 20);
+	lbDone->setColor(cocos2d::Color3B(139, 0, 0));
+	lbDone->enableOutline(cocos2d::Color4B::BLACK, 1);
+	auto btnDone = ui::Button::create();
+	btnDone->setPosition(Vec2(150, 230));
+	btnDone->setTitleLabel(lbDone);
+	btnDone->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN: {
+			auto sceneMainMenu = MainMenuScene::createScene();
+			Director::getInstance()->replaceScene(TransitionFade::create(1, sceneMainMenu, Color3B(128, 0, 0)));
+			break;
+		}
+
+		case ui::Widget::TouchEventType::ENDED:
+			break;
+		default:
+			break;
+		}
+	});
+	addChild(btnDone);
 
 	
 
