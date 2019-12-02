@@ -8,6 +8,7 @@ using namespace cocos2d::ui;
 
 USING_NS_CC;
 
+cocos2d::Sprite* spriteSpaceShip;
 Scene* GamePlayScene::createScene()
 {
     return GamePlayScene::create();
@@ -41,28 +42,36 @@ bool GamePlayScene::init()
 
 	auto spritespaceshipgCache = SpriteFrameCache::getInstance();
 	spritespaceshipgCache->addSpriteFramesWithFile("ship.plist", "ship.png");
-	const int numSpritePaceShip = 8;
-	auto spritePaceShip = Sprite::createWithSpriteFrameName("1.png");
-	spritePaceShip->setPosition(Vec2(280, 50));
+	const int numSpriteSpaceShip = 8;
+	spriteSpaceShip = Sprite::createWithSpriteFrameName("1.png");
+	spriteSpaceShip->setPosition(Vec2(280, 50));
 	auto targetSizePS = Size(75, 75);
-	auto sizeOrigPS = spritePaceShip->getContentSize();
-	spritePaceShip->setScale((targetSizePS.width / sizeOrigPS.width), (targetSizePS.height / sizeOrigPS.height));
-	addChild(spritePaceShip);
+	auto sizeOrigPS = spriteSpaceShip->getContentSize();
+	spriteSpaceShip->setScale((targetSizePS.width / sizeOrigPS.width), (targetSizePS.height / sizeOrigPS.height));
+	addChild(spriteSpaceShip);
 	//create animate
-	Vector<SpriteFrame*> anmPaceShip;
-	anmPaceShip.reserve(numSpritePaceShip);
-	anmPaceShip.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("1.png"));
-	anmPaceShip.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("2.png"));
-	anmPaceShip.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("3.png"));
-	anmPaceShip.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("4.png"));
-	anmPaceShip.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("5.png"));
-	anmPaceShip.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("6.png"));
-	anmPaceShip.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("7.png"));
-	anmPaceShip.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("8.png"));
-	auto animationPAceShip = Animation::createWithSpriteFrames(anmPaceShip, 0.05f);
-	auto animatePaceShip = Animate::create(animationPAceShip);
-	spritePaceShip->runAction(RepeatForever::create(animatePaceShip));
+	Vector<SpriteFrame*> anmSpaceShip;
+	anmSpaceShip.reserve(numSpriteSpaceShip);
+	anmSpaceShip.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("1.png"));
+	anmSpaceShip.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("2.png"));
+	anmSpaceShip.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("3.png"));
+	anmSpaceShip.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("4.png"));
+	anmSpaceShip.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("5.png"));
+	anmSpaceShip.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("6.png"));
+	anmSpaceShip.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("7.png"));
+	anmSpaceShip.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("8.png"));
+	auto animationSpceShip = Animation::createWithSpriteFrames(anmSpaceShip, 0.05f);
+	auto animateSpaceShip = Animate::create(animationSpceShip);
+	spriteSpaceShip->runAction(RepeatForever::create(animateSpaceShip));
 
+	auto controlSpaceShip = EventListenerTouchOneByOne::create();
+	controlSpaceShip->onTouchBegan = [](Touch* touch, Event* event) {
+		auto moveSpaceShip = MoveTo::create(1, touch->getLocation());
+		spriteSpaceShip->runAction(moveSpaceShip);
+
+		return true;
+	};
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(controlSpaceShip, this);
 	scheduleUpdate();
     return true;
 }
