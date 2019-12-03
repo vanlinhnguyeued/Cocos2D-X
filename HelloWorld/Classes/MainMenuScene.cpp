@@ -30,34 +30,28 @@ bool MainMenuScene::init()
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-	auto bgrMainMenu = Sprite::create("backgroundMainMenu.png");
+	//Set background
+	auto bgrMainMenu = Sprite::create("Sprites/background.png");
 	bgrMainMenu -> setPosition(Vec2(0, 0));
 	bgrMainMenu->setAnchorPoint(Vec2(0, 0));
-	//set size for bgr
-	auto targetSizeBGR = Size(560.0f, 320.0f);
+	auto targetSizeBGR = Size(visibleSize.width, visibleSize.height);
 	auto sizeOrigBgr = bgrMainMenu->getContentSize();
 	bgrMainMenu->setScale((targetSizeBGR.width / sizeOrigBgr.width), (targetSizeBGR.height / sizeOrigBgr.height));
 	addChild(bgrMainMenu);
 
-	//set label
-	auto lbMenu = Label::createWithTTF("Menu", "fonts/VDOMCAS.TTF", 60);
-	lbMenu->setAnchorPoint(Vec2(0.5, 0.5));
-	lbMenu->setPosition(Vec2(280, 280));
-	lbMenu->setColor(cocos2d::Color3B(139, 0, 0));
-	lbMenu->enableOutline(cocos2d::Color4B::BLACK, 1);
-	addChild(lbMenu);
+	//setSprite logo
+	auto logoGame = Sprite::create("Sprites/logo/logo.png");
+	logoGame->setAnchorPoint(Vec2(0.5, 0.5));
+	logoGame->setPosition(Vec2(visibleSize.width / 2, 500));
+	auto targetSizeLogo = Size(250, 200);
+	auto sizeOrigLogo = logoGame->getContentSize();
+	logoGame->setScale((targetSizeLogo.width / sizeOrigLogo.width), (targetSizeLogo.height / sizeOrigLogo.height));
+	addChild(logoGame);
 
-
-	//set label Newgame
-	auto lbNewGame = Label::createWithTTF("New Game", "fonts/VDOMCAS.TTF", 30);
-	lbNewGame->setAnchorPoint(Vec2(0.5, 0.5));
-	lbNewGame->setColor(cocos2d::Color3B(139, 0, 0));
-	lbNewGame->enableOutline(cocos2d::Color4B::BLACK, 1);
-	//set button Newgame "Buttons/setting_normal.png","Buttons/setting_pressed.png"
-	auto btnNewGame = ui::Button::create();
+	//create button Newgame 
+	auto btnNewGame = ui::Button::create("Buttons/play_normal.png", "Button/play_pressed.png");
 	btnNewGame->setAnchorPoint(Vec2(0.5, 0.5));
-	btnNewGame->setPosition(Vec2(280, 200));
-	btnNewGame->setTitleLabel(lbNewGame);
+	btnNewGame->setPosition(Vec2(visibleSize.width/2, visibleSize.height / 2));
 	btnNewGame->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
 		switch (type)
 		{
@@ -73,18 +67,15 @@ bool MainMenuScene::init()
 			break;
 		}
 	});
+	auto targetSizeStart = Size(70, 70);
+	auto sizeOrigStart = btnNewGame->getContentSize();
+	btnNewGame->setScale((targetSizeStart.width / sizeOrigStart.width), (targetSizeStart.height / sizeOrigStart.height));
 	addChild(btnNewGame);
 
-	//set label setting
-	auto lbSetting = Label::createWithTTF("Setting", "fonts/VDOMCAS.TTF", 30);
-	lbSetting->setAnchorPoint(Vec2(0.5, 0.5));
-	lbSetting->setColor(cocos2d::Color3B(139, 0, 0));
-	lbSetting->enableOutline(cocos2d::Color4B::BLACK, 1);
-	//set button setting
-	auto btnSetting = ui::Button::create();
+	//create button setting
+	auto btnSetting = ui::Button::create("Buttons/setting_normal.png", "Buttons/setting_pressed.png");
 	btnSetting->setAnchorPoint(Vec2(0.5, 0.5));
-	btnSetting->setPosition(Vec2(280, 160));
-	btnSetting->setTitleLabel(lbSetting);
+	btnSetting->setPosition(Vec2(9*visibleSize.width / 10, visibleSize.height/20));
 	btnSetting->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
 		switch (type)
 		{
@@ -99,86 +90,10 @@ bool MainMenuScene::init()
 			break;
 		}
 	});
+	auto targetSizeSetting = Size(50, 50);
+	auto sizeOrigSetting = btnSetting->getContentSize();
+	btnSetting->setScale((targetSizeSetting.width / sizeOrigSetting.width), (targetSizeSetting.height / sizeOrigSetting.height));
 	addChild(btnSetting);
-
-	//set label Exit
-	auto lbExit = Label::createWithTTF("Exit", "fonts/VDOMCAS.TTF", 30);
-	lbExit->setAnchorPoint(Vec2(0.5, 0.5));
-	lbExit->setColor(cocos2d::Color3B(139, 0, 0));
-	lbExit->enableOutline(cocos2d::Color4B::BLACK, 1);
-	//set button Exit
-	auto btnExit = ui::Button::create();
-	btnExit->setAnchorPoint(Vec2(0.5, 0.5));
-	btnExit->setPosition(Vec2(280, 120));
-	btnExit->setTitleLabel(lbExit);
-	btnExit->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
-		switch (type)
-		{
-		case ui::Widget::TouchEventType::BEGAN: {
-			Director::getInstance()->end();
-			break;
-		}
-			
-		case ui::Widget::TouchEventType::ENDED:
-			break;
-		default:
-			break;
-		}
-	});
-	addChild(btnExit);
-
-	auto spriteRedCache = SpriteFrameCache::getInstance();
-	spriteRedCache->addSpriteFramesWithFile("red.plist", "red.png");
-
-	const int numSpriteRed = 14;
-	auto spriteRed = Sprite::createWithSpriteFrameName("1_0.png");
-	spriteRed->setPosition(260, 200);
-	addChild(spriteRed);
-	//create animate
-	Vector<SpriteFrame*> animationRed;
-	animationRed.reserve(numSpriteRed);
-	animationRed.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("1_0.png"));
-	animationRed.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("1_1.png"));
-	animationRed.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("1_2.png"));
-	animationRed.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("1_3.png"));
-	animationRed.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("1_4.png"));
-	animationRed.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("1_5.png"));
-	animationRed.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("1_6.png"));
-	animationRed.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("1_7.png"));
-	animationRed.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("1_8.png"));
-	animationRed.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("1_9.png"));
-	animationRed.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("1_10.png"));
-	animationRed.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("1_11.png"));
-	animationRed.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("1_12.png"));
-	animationRed.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("1_13.png"));
-	auto animation = Animation::createWithSpriteFrames(animationRed, 0.1f);
-	auto animate = Animate::create(animation);
-	spriteRed->runAction(RepeatForever::create(animate));
-	
-	auto spriteLoadingCache = SpriteFrameCache::getInstance();
-	spriteLoadingCache->addSpriteFramesWithFile("loading.plist", "loading.png");
-
-	const int numSpriteLoading = 11;
-	auto spriteLoading = Sprite::createWithSpriteFrameName("frame-0.png");
-	spriteLoading->setPosition(280, 50);
-	addChild(spriteLoading);
-	//create animate
-	Vector<SpriteFrame*> animationLoading;
-	animationLoading.reserve(numSpriteLoading);
-	animationLoading.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("frame-0.png"));
-	animationLoading.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("frame-1.png"));
-	animationLoading.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("frame-2.png"));
-	animationLoading.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("frame-3.png"));
-	animationLoading.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("frame-4.png"));
-	animationLoading.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("frame-5.png"));
-	animationLoading.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("frame-6.png"));
-	animationLoading.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("frame-7.png"));
-	animationLoading.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("frame-8.png"));
-	animationLoading.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("frame-9.png"));
-	animationLoading.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("frame-10.png"));
-	auto animationLoading1 = Animation::createWithSpriteFrames(animationLoading, 0.05f);
-	auto animateLoading = Animate::create(animationLoading1);
-	spriteLoading->runAction(RepeatForever::create(animateLoading));
 
 	scheduleUpdate();
     return true;

@@ -33,29 +33,29 @@ bool SettingScene::init()
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-	auto bgrMainMenu = Sprite::create("backgroundMainMenu.png");
-	bgrMainMenu -> setPosition(Vec2(0, 0));
+	auto bgrMainMenu = Sprite::create("Sprites/background.png");
+	bgrMainMenu->setPosition(Vec2(0, 0));
 	bgrMainMenu->setAnchorPoint(Vec2(0, 0));
 	//set size for bgr
-	auto targetSizeBGR = Size(560.0f, 320.0f);
+	auto targetSizeBGR = Size(visibleSize.width, visibleSize.height);
 	auto sizeOrigBgr = bgrMainMenu->getContentSize();
 	bgrMainMenu->setScale((targetSizeBGR.width / sizeOrigBgr.width), (targetSizeBGR.height / sizeOrigBgr.height));
 	addChild(bgrMainMenu);
 
 	//create label Setting
-	auto lbMenu = Label::createWithTTF("Setting", "fonts/VDOMCAS.TTF", 60);
+	auto lbMenu = Label::createWithSystemFont("SETTING", "Arial", 50);
 	lbMenu->setAnchorPoint(Vec2(0.5, 0.5));
-	lbMenu->setPosition(Vec2(280, 280));
-	lbMenu->setColor(cocos2d::Color3B(139, 0, 0));
+	lbMenu->setPosition(Vec2(visibleSize.width/2, 500));
+	lbMenu->setColor(cocos2d::Color3B(180, 209, 218));
 	lbMenu->enableOutline(cocos2d::Color4B::BLACK, 1);
 	addChild(lbMenu);
 
 
 	//Create LayoutSound
 	layoutSound = ui::Layout::create();
-	layoutSound->setContentSize(cocos2d::Size(250, 50));
+	layoutSound->setContentSize(cocos2d::Size(200, 50));
 	layoutSound->setAnchorPoint(Vec2(0, 1));
-	layoutSound->setPosition(Vec2(200, 200));
+	layoutSound->setPosition(Vec2(visibleSize.width / 5 + 50, 300));
 	addChild(layoutSound);
 	//create slider
 	auto soundSlider = ui::Slider::create();
@@ -64,7 +64,8 @@ bool SettingScene::init()
 	soundSlider->loadProgressBarTexture("Sprites/slider_bar_pressed.png");
 	soundSlider->setPercent(75);
 	soundSlider->setAnchorPoint(Vec2(0, 1));
-	soundSlider->setPosition(Vec2(0, 35));
+	soundSlider->setPosition(Vec2(0,100));
+	soundSlider->setSize(Size(200, 10));
 	layoutSound->addChild(soundSlider);
 	//create checkbox
 	auto checkboxSound = ui::CheckBox::create("stop.png", "stop.png", "checkbox.png", "checkbox.png", "stop.png");
@@ -82,7 +83,7 @@ bool SettingScene::init()
 		}
 	});
 	checkboxSound->setAnchorPoint(Vec2(0, 1));
-	checkboxSound->setPosition(Vec2(220, 40));
+	checkboxSound->setPosition(Vec2(210, 105));
 	layoutSound->addChild(checkboxSound);
 	layoutSound->setVisible(false);
 	
@@ -92,7 +93,7 @@ bool SettingScene::init()
 	layoutAbout = ui::Layout::create();
 	layoutAbout->setContentSize(cocos2d::Size(250, 200));
 	layoutAbout->setAnchorPoint(Vec2(0, 1));
-	layoutAbout->setPosition(Vec2(200, 160));
+	layoutAbout->setPosition(Vec2(visibleSize.width / 5+50, 300));
 	addChild(layoutAbout);
 	//Create ScrollView
 	auto scrollView = ui::ScrollView::create();
@@ -138,22 +139,22 @@ bool SettingScene::init()
 
 	//create menu item
 	//create lbSuondItem
-	auto lbSuondItem = Label::createWithTTF("Sound:", "fonts/VDOMCAS.TTF", 20);
+	auto lbSuondItem = Label::createWithTTF("Sound:", "fonts/VDOMCAS.TTF", 30);
 	lbSuondItem->setAnchorPoint(Vec2(0.5, 0.5));
-	lbSuondItem->setColor(cocos2d::Color3B(139, 0, 0));
+	lbSuondItem->setColor(cocos2d::Color3B(180, 209, 218));
 	lbSuondItem->enableOutline(cocos2d::Color4B::BLACK, 1);
 	//create item sound
 	auto soundItem = MenuItemLabel::create(lbSuondItem, CC_CALLBACK_1(SettingScene::SoundOnClick, this));
-	soundItem->setPosition(Vec2(150, 180));
+	soundItem->setPosition(Vec2(visibleSize.width/5, 350));
 
 	//create lbAboutItem
-	auto lbAboutItem = Label::createWithTTF("About:", "fonts/VDOMCAS.TTF", 20);
+	auto lbAboutItem = Label::createWithTTF("About:", "fonts/VDOMCAS.TTF", 30);
 	lbAboutItem->setAnchorPoint(Vec2(0.5, 0.5));
-	lbAboutItem->setColor(cocos2d::Color3B(139, 0, 0));
+	lbAboutItem->setColor(cocos2d::Color3B(180, 209, 218));
 	lbAboutItem->enableOutline(cocos2d::Color4B::BLACK, 1);
 	//create aboutItem
 	auto aboutItem = MenuItemLabel::create(lbAboutItem, CC_CALLBACK_1(SettingScene::AboutOnClick, this));
-	aboutItem->setPosition(Vec2(150, 140));
+	aboutItem->setPosition(Vec2(visibleSize.width / 5, 300));
 
 	//create menu
 	Vector<MenuItem*> menuItems;
@@ -165,43 +166,17 @@ bool SettingScene::init()
 
 
 	//add text field
-	auto tfNamePlyer = ui::TextField::create("Name player", "fonts/VDOMCAS.TTF", 18);
-	tfNamePlyer->setColor(cocos2d::Color3B(255, 6, 6));
-	tfNamePlyer->setPosition(Vec2(400, 230));
+	auto tfNamePlyer = ui::TextField::create("Name player", "fonts/VDOMCAS.TTF", 25);
+	tfNamePlyer->setColor(cocos2d::Color3B(180, 209, 218));
+	tfNamePlyer->setAnchorPoint(Vec2(0.5, 0.5));
+	tfNamePlyer->setPosition(Vec2(3*visibleSize.width/5+50, 400));
 	addChild(tfNamePlyer);
 
 	auto btnEditName = ui::Button::create("pencil.png", "pencil.png", "pencil.png");
-	btnEditName->setPosition(Vec2(450, 230));
+	btnEditName->setAnchorPoint(Vec2(0.5, 0.5));
+	btnEditName->setPosition(Vec2(3 * visibleSize.width / 5 + 120, 400));
 	addChild(btnEditName);
 
-	// add button done
-	auto lbDone = Label::createWithTTF("Done", "fonts/VDOMCAS.TTF", 20);
-	lbDone->setColor(cocos2d::Color3B(139, 0, 0));
-	lbDone->enableOutline(cocos2d::Color4B::BLACK, 1);
-	auto btnDone = ui::Button::create();
-	btnDone->setPosition(Vec2(150, 230));
-	btnDone->setTitleLabel(lbDone);
-	btnDone->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
-		switch (type)
-		{
-		case ui::Widget::TouchEventType::BEGAN: {
-			auto sceneMainMenu = MainMenuScene::createScene();
-			Director::getInstance()->replaceScene(TransitionFade::create(1, sceneMainMenu, Color3B(128, 0, 0)));
-			break;
-		}
-
-		case ui::Widget::TouchEventType::ENDED:
-			break;
-		default:
-			break;
-		}
-	});
-	addChild(btnDone);
-
-	
-
-
-	
 	scheduleUpdate();
     return true;
 }
