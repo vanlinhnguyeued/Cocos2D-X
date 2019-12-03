@@ -81,7 +81,7 @@ bool MainMenuScene::init()
 		{
 		case ui::Widget::TouchEventType::BEGAN: {
 			auto sceneSetting = SettingScene::createScene();
-			Director::getInstance()->replaceScene(TransitionFade::create(1, sceneSetting, Color3B(128, 0, 0)));
+			Director::getInstance()->replaceScene(TransitionFade::create(0.5f, sceneSetting, Color3B(0, 0, 0)));
 			break;
 		}
 		case ui::Widget::TouchEventType::ENDED:

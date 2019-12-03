@@ -52,6 +52,7 @@ bool LoadingScene::init()
 	addChild(loadingFrame);
 	auto moveLoading = MoveTo::create(3.0f, Vec2(9 * visibleSize.width / 10, visibleSize.height / 5));
 	loadingFrame->runAction(moveLoading);
+	loadingFrame->runAction(RepeatForever::create(animate));
 
 	auto spLogo = Sprite::create("Sprites/Logo/logo__.png");
 	spLogo->setAnchorPoint(Vec2(0.5, 0.5));
@@ -62,16 +63,16 @@ bool LoadingScene::init()
 	spLogo->setScale((targetSizeLogo.width / sizeOrigLogo.width), (targetSizeLogo.height / sizeOrigLogo.height));
 	auto scaleLogo = ScaleTo::create(3.0f, 1);
 	spLogo->runAction(scaleLogo);
+	
 
-	this->schedule(schedule_selector(LoadingScene::changeScene), 3.0f);
+	schedule(schedule_selector(LoadingScene::changeScene), 3.0f);
 
 	scheduleUpdate();
-	loadingFrame->runAction(RepeatForever::create(animate));
+	
     return true;
 }
 
 void LoadingScene::update(float deltaTime) {
-	
 
 }
 void LoadingScene::changeScene(float deltaTime) {

@@ -5,8 +5,10 @@ class SettingScene : public cocos2d::Scene
 public:
     static cocos2d::Scene* createScene();
     virtual bool init();
-	void update(float delaTime);
+	void createSoundLayer(Ref* pSender);
+	void createAboutLayer(Ref* pSender);
 	void SoundOnClick(Ref* pSender);
 	void AboutOnClick(Ref* pSender);
+	void ChangePlayerName(Ref* pSender);
     CREATE_FUNC(SettingScene);
 };

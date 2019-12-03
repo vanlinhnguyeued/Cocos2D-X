@@ -104,57 +104,31 @@ bool SettingScene::init()
 	scrollView->setPosition(Vec2(0, 200));
 	scrollView->setInnerContainerSize(Size(250, 200));
 	//add item to scroll
-	auto about1 = Label::createWithTTF("Genre(s): Platform", "fonts/VDOMCAS.TTF", 18);
+	auto about1 = Label::createWithTTF("Developer(s): NVLinh\nPublisher(s): Nintendo\nCreator(s): Shigeru Miyamoto\nComposer(s): Koji Kondo", "fonts/VDOMCAS.TTF", 16);
 	about1->setAnchorPoint(Vec2(0, 0.5));
 	about1->setPosition(Vec2(10, 180));
 	scrollView->addChild(about1);
-	auto about2 = Label::createWithTTF("Developer(s): Nintendo EAD (1985–2015)", "fonts/VDOMCAS.TTF", 18);
-	about2->setPosition(Vec2(80, 160));
-	scrollView->addChild(about2);
-	/*about2->setPosition(Vec2(scrollView->getContentSize().width / 10, 50));
-	scrollView->addChild(about2);
-	auto about3 = Label::createWithTTF("Publisher(s): Nintendo", "fonts/VDOMCAS.TTF", 18);
-	scrollView->addChild(about3);
-	about3->setPosition(Vec2(scrollView->getContentSize().width / 10, 100));
-	auto about4 = Label::createWithTTF("Creator(s): Shigeru Miyamoto", "fonts/VDOMCAS.TTF", 18);
-	scrollView->addChild(about4);
-	about4->setPosition(Vec2(scrollView->getContentSize().width / 10,150));
-	auto about5 = Label::createWithTTF("Composer(s): Koji Kondo", "fonts/VDOMCAS.TTF", 18);
-	scrollView->addChild(about5);
-	about5->setPosition(Vec2(scrollView->getContentSize().width / 10, 200));
-	auto about6 = Label::createWithTTF("Latest release: Super Mario Maker 2", "fonts/VDOMCAS.TTF", 18);
-	scrollView->addChild(about6);
-	about6->setPosition(Vec2(scrollView->getContentSize().width / 10, 250));
-	Vector<Label*> labelItem;
-	labelItem.pushBack(about1);
-	labelItem.pushBack(about2);
-	labelItem.pushBack(about3);
-	labelItem.pushBack(about4);
-	labelItem.pushBack(about5);
-	labelItem.pushBack(about6);
-	scrollView->addChild(labelItem);
-	*/
 	layoutAbout->addChild(scrollView);
 	layoutAbout->setVisible(false);
 
 	//create menu item
 	//create lbSuondItem
-	auto lbSuondItem = Label::createWithTTF("Sound:", "fonts/VDOMCAS.TTF", 30);
+	auto lbSuondItem = Label::createWithTTF("Sound", "fonts/VDOMCAS.TTF", 35);
 	lbSuondItem->setAnchorPoint(Vec2(0.5, 0.5));
 	lbSuondItem->setColor(cocos2d::Color3B(180, 209, 218));
-	lbSuondItem->enableOutline(cocos2d::Color4B::BLACK, 1);
+	lbSuondItem->enableOutline(cocos2d::Color4B::BLACK, 2);
 	//create item sound
 	auto soundItem = MenuItemLabel::create(lbSuondItem, CC_CALLBACK_1(SettingScene::SoundOnClick, this));
-	soundItem->setPosition(Vec2(visibleSize.width/5, 350));
+	soundItem->setPosition(Vec2(visibleSize.width/2, 350));
 
 	//create lbAboutItem
-	auto lbAboutItem = Label::createWithTTF("About:", "fonts/VDOMCAS.TTF", 30);
+	auto lbAboutItem = Label::createWithTTF("About:", "fonts/VDOMCAS.TTF", 35);
 	lbAboutItem->setAnchorPoint(Vec2(0.5, 0.5));
 	lbAboutItem->setColor(cocos2d::Color3B(180, 209, 218));
-	lbAboutItem->enableOutline(cocos2d::Color4B::BLACK, 1);
+	lbAboutItem->enableOutline(cocos2d::Color4B::BLACK, 2);
 	//create aboutItem
 	auto aboutItem = MenuItemLabel::create(lbAboutItem, CC_CALLBACK_1(SettingScene::AboutOnClick, this));
-	aboutItem->setPosition(Vec2(visibleSize.width / 5, 300));
+	aboutItem->setPosition(Vec2(visibleSize.width / 2, 280));
 
 	//create menu
 	Vector<MenuItem*> menuItems;
@@ -169,20 +143,19 @@ bool SettingScene::init()
 	auto tfNamePlyer = ui::TextField::create("Name player", "fonts/VDOMCAS.TTF", 25);
 	tfNamePlyer->setColor(cocos2d::Color3B(180, 209, 218));
 	tfNamePlyer->setAnchorPoint(Vec2(0.5, 0.5));
-	tfNamePlyer->setPosition(Vec2(3*visibleSize.width/5+50, 400));
+	tfNamePlyer->setPosition(Vec2(visibleSize.width/2, 210));
 	addChild(tfNamePlyer);
-
-	auto btnEditName = ui::Button::create("pencil.png", "pencil.png", "pencil.png");
-	btnEditName->setAnchorPoint(Vec2(0.5, 0.5));
-	btnEditName->setPosition(Vec2(3 * visibleSize.width / 5 + 120, 400));
-	addChild(btnEditName);
 
 	scheduleUpdate();
     return true;
 }
 
-void SettingScene::update(float deltaTime) {
-	
+void SettingScene::createSoundLayer(Ref * pSender)
+{
+}
+
+void SettingScene::createAboutLayer(Ref * pSender)
+{
 }
 void SettingScene::SoundOnClick(Ref* pSender) {
 
@@ -199,4 +172,8 @@ void SettingScene::AboutOnClick(Ref* pSender) {
 		layoutAbout->setVisible(true);
 	}
 	else layoutAbout->setVisible(false);
+}
+
+void SettingScene::ChangePlayerName(Ref * pSender)
+{
 }
