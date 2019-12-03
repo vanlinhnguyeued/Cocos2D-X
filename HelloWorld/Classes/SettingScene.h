@@ -8,7 +8,5 @@ public:
 	void createSoundLayer(Ref* pSender);
 	void createAboutLayer(Ref* pSender);
 	void SoundOnClick(Ref* pSender);
-	void AboutOnClick(Ref* pSender);
-	void ChangePlayerName(Ref* pSender);
     CREATE_FUNC(SettingScene);
 };
