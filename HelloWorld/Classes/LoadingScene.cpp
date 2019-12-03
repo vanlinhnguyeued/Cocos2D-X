@@ -1,8 +1,9 @@
 
 
 #include "LoadingScene.h"
-#include "LogoScene.h"
+#include "MainMenuScene.h"
 #include "SimpleAudioEngine.h"
+#include "ui/CocosGUI.h"
 
 USING_NS_CC;
 
@@ -32,13 +33,48 @@ bool LoadingScene::init()
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 	
 
+	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Sprites/Loading/loading3.plist", "Sprites/Loading/loading3.png");
+	auto loadingFrame = Sprite::createWithSpriteFrameName("spritesheet0.png");
+	loadingFrame->setPosition(Vec2(visibleSize.width / 10, visibleSize.height / 5));
+	char loadingFrameByName[30] = { 0 };
+	Vector<SpriteFrame*> animLoading;
+	for (int i =0; i < 4; i++)
+	{
+		sprintf(loadingFrameByName, "spritesheet%d.png", i);
+		auto frame = SpriteFrameCache::getInstance()->getSpriteFrameByName(loadingFrameByName);
+		animLoading.pushBack(frame);
+	}
+	Animation* animation = Animation::createWithSpriteFrames(animLoading, 0.1f);
+	Animate* animate = Animate::create(animation);
+	auto targetSizeLoading = Size(50, 50);
+	auto sizeOrigLoading = loadingFrame->getContentSize();
+	loadingFrame->setScale((targetSizeLoading.width / sizeOrigLoading.width), (targetSizeLoading.height / sizeOrigLoading.height));
+	addChild(loadingFrame);
+	auto moveLoading = MoveTo::create(3.0f, Vec2(9 * visibleSize.width / 10, visibleSize.height / 5));
+	loadingFrame->runAction(moveLoading);
+
+	auto spLogo = Sprite::create("Sprites/Logo/logo__.png");
+	spLogo->setAnchorPoint(Vec2(0.5, 0.5));
+	spLogo->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2));
+	addChild(spLogo);
+	auto targetSizeLogo = Size(10, 10);
+	auto sizeOrigLogo = spLogo->getContentSize();
+	spLogo->setScale((targetSizeLogo.width / sizeOrigLogo.width), (targetSizeLogo.height / sizeOrigLogo.height));
+	auto scaleLogo = ScaleTo::create(3.0f, 1);
+	spLogo->runAction(scaleLogo);
+
+	this->schedule(schedule_selector(LoadingScene::changeScene), 3.0f);
+
 	scheduleUpdate();
+	loadingFrame->runAction(RepeatForever::create(animate));
     return true;
 }
-
-
 
 void LoadingScene::update(float deltaTime) {
 	
 
+}
+void LoadingScene::changeScene(float deltaTime) {
+	auto scene = MainMenuScene::createScene();
+	Director::getInstance()->replaceScene(TransitionFade::create(1.5f, scene, Color3B(0, 0, 0)));
 }
