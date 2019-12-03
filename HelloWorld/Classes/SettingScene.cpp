@@ -192,6 +192,19 @@ bool SettingScene::init()
 	aboutLayer->addChild(scrollView);
 	addChild(aboutLayer);
 	aboutLayer->setVisible(false);
+	//end about layer
+
+	auto listener = EventListenerTouchOneByOne::create();
+	listener->onTouchBegan = [](Touch* touch, Event* event) {
+		if (soundLayer->isVisible() == true) {
+			soundLayer->setVisible(false);
+		}
+		if (aboutLayer->isVisible() == true) {
+			aboutLayer->setVisible(false);
+		}
+		return true;
+	};
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
 	scheduleUpdate();
     return true;
