@@ -9,7 +9,7 @@ class ResourceManager
 private:
 	static ResourceManager* s_instance;
 	string m_dataFoderPath;
-	Map<char, Sprite*> m_Sprites;
+	Map<int, Sprite*> m_Sprites;
 	Map<char, ui::Button*> m_Buttons;
 	Map<char, Label*> m_Labels;
 	ResourceManager();

@@ -43,11 +43,7 @@ bool GamePlayScene::init()
 	bgrGP->setScale((targetSizeBGR.width / sizeOrigBgr.width), (targetSizeBGR.height / sizeOrigBgr.height));
 	addChild(bgrGP);
 
-	auto scaleBGR = ScaleBy::create(5, 1.5);
-	auto fadeOut = FadeOut::create(5);
-	bgrGP->runAction(fadeOut);
-	bgrGP->runAction(RepeatForever::create(scaleBGR));
-
+	
 	rock1 = Sprite::create("Sprites/Rock/aestroid_brown.png");
 	rock1->setAnchorPoint(Vec2(0, 0));
 	rock1->setPosition(Vec2(400, 200));
