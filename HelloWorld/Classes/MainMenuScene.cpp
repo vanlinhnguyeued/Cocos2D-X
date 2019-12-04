@@ -1,5 +1,5 @@
 ﻿#include "SimpleAudioEngine.h"
-#include "HelloWorldScene.h"
+#include "GamePlayScene.h"
 #include "MainMenuScene.h"
 #include "SettingScene.h"
 #include "ui/CocosGUI.h"
@@ -49,20 +49,20 @@ bool MainMenuScene::init()
 	addChild(logoGame);
 
 	//create button Newgame 
-	auto btnNewGame = ui::Button::create("Buttons/play_normal.png", "Button/play_pressed.png");
+	auto btnNewGame = ui::Button::create("Buttons/play_normal.png", "Button/play_pressed.png", "Buttons/play_normal.png");
 	btnNewGame->setAnchorPoint(Vec2(0.5, 0.5));
 	btnNewGame->setPosition(Vec2(visibleSize.width/2, visibleSize.height / 2));
 	btnNewGame->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
 		switch (type)
 		{
-		case ui::Widget::TouchEventType::BEGAN:{
-			auto sceneHelloWorld = HelloWorld::createScene();
-			Director::getInstance()->replaceScene(TransitionFade::create(1, sceneHelloWorld, Color3B(128, 0, 0)));
-			break; 
-		}
-			
-		case ui::Widget::TouchEventType::ENDED:
+		case ui::Widget::TouchEventType::BEGAN:
 			break;
+		case ui::Widget::TouchEventType::ENDED:
+		{
+			auto GamePlayScene = GamePlayScene::createScene();
+			Director::getInstance()->replaceScene(TransitionFade::create(1, GamePlayScene, Color3B(128, 0, 0)));
+			break;
+		}
 		default:
 			break;
 		}
@@ -73,19 +73,19 @@ bool MainMenuScene::init()
 	addChild(btnNewGame);
 
 	//create button setting
-	auto btnSetting = ui::Button::create("Buttons/setting_normal.png", "Buttons/setting_pressed.png");
+	auto btnSetting = ui::Button::create("Buttons/setting_normal.png", "Buttons/setting_pressed.png", "Buttons/setting_normal.png");
 	btnSetting->setAnchorPoint(Vec2(0.5, 0.5));
 	btnSetting->setPosition(Vec2(9*visibleSize.width / 10, visibleSize.height/20));
 	btnSetting->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
 		switch (type)
 		{
-		case ui::Widget::TouchEventType::BEGAN: {
+		case ui::Widget::TouchEventType::BEGAN: break;
+		case ui::Widget::TouchEventType::ENDED: {
 			auto sceneSetting = SettingScene::createScene();
 			Director::getInstance()->replaceScene(TransitionFade::create(0.5f, sceneSetting, Color3B(0, 0, 0)));
 			break;
 		}
-		case ui::Widget::TouchEventType::ENDED:
-			break;
+			
 		default:
 			break;
 		}

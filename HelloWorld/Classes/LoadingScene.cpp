@@ -66,6 +66,14 @@ bool LoadingScene::init()
 	
 
 	schedule(schedule_selector(LoadingScene::changeScene), 3.0f);
+	auto listener = EventListenerTouchOneByOne::create();
+	listener->onTouchBegan = [](Touch* touch, Event* event) {
+		auto scene = MainMenuScene::createScene();
+		Director::getInstance()->replaceScene(TransitionFade::create(0.5f, scene, Color3B(0, 0, 0)));
+
+		return true;
+	};
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
 	scheduleUpdate();
 	

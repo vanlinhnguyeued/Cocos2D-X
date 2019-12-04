@@ -194,17 +194,45 @@ bool SettingScene::init()
 	aboutLayer->setVisible(false);
 	//end about layer
 
+
 	auto listener = EventListenerTouchOneByOne::create();
 	listener->onTouchBegan = [](Touch* touch, Event* event) {
 		if (soundLayer->isVisible() == true) {
 			soundLayer->setVisible(false);
 		}
+
 		if (aboutLayer->isVisible() == true) {
 			aboutLayer->setVisible(false);
 		}
 		return true;
 	};
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+
+	auto btnBack = ui::Button::create("Buttons/leftchevron.png");
+	btnBack->setAnchorPoint(Vec2(0.5, 0.5));
+	btnBack->setPosition(Vec2(20, visibleSize.height *0.9));
+	btnBack->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN: {
+			
+			break;
+		}
+
+		case ui::Widget::TouchEventType::ENDED:
+		{
+			auto MainMenuScene = MainMenuScene::createScene();
+			Director::getInstance()->replaceScene(TransitionFade::create(1, MainMenuScene, Color3B(128, 0, 0)));
+			break;
+		}
+		default:
+			break;
+		}
+	});
+	auto targetSizeStart = Size(30, 30);
+	auto sizeOrigStart = btnBack->getContentSize();
+	btnBack->setScale((targetSizeStart.width / sizeOrigStart.width), (targetSizeStart.height / sizeOrigStart.height));
+	addChild(btnBack);
 
 	scheduleUpdate();
     return true;
@@ -215,8 +243,6 @@ void SettingScene::createSoundLayer(Ref * pSender)
 	if (soundLayer->isVisible() == false) {
 		soundLayer->setVisible(true);
 	}
-	else soundLayer->setVisible(false);
-
 }
 
 void SettingScene::createAboutLayer(Ref * pSender)
@@ -224,7 +250,6 @@ void SettingScene::createAboutLayer(Ref * pSender)
 	if (aboutLayer->isVisible() == false) {
 		aboutLayer->setVisible(true);
 	}
-	else aboutLayer->setVisible(false);
 }
 void SettingScene::SoundOnClick(Ref* pSender) {
 
