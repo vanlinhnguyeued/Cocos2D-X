@@ -2,6 +2,7 @@
 #include "ui/CocosGUI.h"
 #include "GamePlayScene.h"
 #include <math.h>
+#include "ResourceManager.h"
 
 using namespace cocos2d::ui;
 
@@ -34,24 +35,14 @@ bool GamePlayScene::init()
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-	auto bgrGP = Sprite::create("Sprites/background.png");
-	bgrGP->setPosition(Vec2(0, 0));
-	bgrGP->setAnchorPoint(Vec2(0, 0));
-	//set size for bgr
-	auto targetSizeBGR = Size(860.0f, 320.0f);
-	auto sizeOrigBgr = bgrGP->getContentSize();
-	bgrGP->setScale((targetSizeBGR.width / sizeOrigBgr.width), (targetSizeBGR.height / sizeOrigBgr.height));
-	addChild(bgrGP);
+	auto bgrMainBGR = Sprite::createWithSpriteFrame(ResourceManager::getInstance()->getSpriteByID(0)->getSpriteFrame());
+	bgrMainBGR->setPosition(Vec2(0, 0));
+	bgrMainBGR->setAnchorPoint(Vec2(0, 0));
+	auto targetSizeBGR = Size(visibleSize.width, visibleSize.height);
+	auto sizeOrigBgr = bgrMainBGR->getContentSize();
+	bgrMainBGR->setScale((targetSizeBGR.width / sizeOrigBgr.width), (targetSizeBGR.height / sizeOrigBgr.height));
+	addChild(bgrMainBGR);
 
-	
-	rock1 = Sprite::create("Sprites/Rock/aestroid_brown.png");
-	rock1->setAnchorPoint(Vec2(0, 0));
-	rock1->setPosition(Vec2(400, 200));
-	addChild(rock1);
-
-	moveRock = MoveTo::create(3, Vec2(0, 0));
-	rock1->runAction(RepeatForever::create(moveRock));
-	
 
 	auto spritespaceshipgCache = SpriteFrameCache::getInstance();
 	spritespaceshipgCache->addSpriteFramesWithFile("ship.plist", "ship.png");
@@ -62,7 +53,6 @@ bool GamePlayScene::init()
 	auto sizeOrigPS = spriteSpaceShip->getContentSize();
 	spriteSpaceShip->setScale((targetSizePS.width / sizeOrigPS.width), (targetSizePS.height / sizeOrigPS.height));
 	addChild(spriteSpaceShip);
-	//create animate
 	Vector<SpriteFrame*> anmSpaceShip;
 	anmSpaceShip.reserve(numSpriteSpaceShip);
 	anmSpaceShip.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("1.png"));
@@ -116,8 +106,5 @@ bool GamePlayScene::init()
 }
 
 void GamePlayScene::update(float deltaTime) {
-	if (rock1->getPosition().x <= 1 && rock1->getPosition().y <= 1) {
-		rock1->setPosition(Vec2(400, 200));
-	}
-	//rock1->runAction(moveRock);
+
 }

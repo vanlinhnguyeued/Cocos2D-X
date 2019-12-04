@@ -10,8 +10,8 @@ private:
 	static ResourceManager* s_instance;
 	string m_dataFoderPath;
 	Map<int, Sprite*> m_Sprites;
-	Map<char, ui::Button*> m_Buttons;
-	Map<char, Label*> m_Labels;
+	Map<int, ui::Button*> m_Buttons;
+	Map<int, Label*> m_Labels;
 	ResourceManager();
 	
 
@@ -21,9 +21,9 @@ public:
 	static ResourceManager* getInstance();
 	void init(const string path);
 	void load(string fileName);
-	Sprite* getSpriteByID(char id);
-	ui::Button* getButtonByID(char id);
-	Label* getLabelByID(char id);
+	Sprite* getSpriteByID(int id);
+	ui::Button* getButtonByID(int id);
+	Label* getLabelByID(int id);
 };
 
 

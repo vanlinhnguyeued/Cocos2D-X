@@ -72,14 +72,14 @@ bool AppDelegate::applicationDidFinishLaunching() {
     glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::NO_BORDER);
 
     register_all_packages();
-
+	ResourceManager::getInstance()->init("Data.bin");
     // create a scene. it's an autorelease object
     auto sceneMenu = LoadingScene::createScene();
 	
     director->runWithScene(sceneMenu);
 	
 
-	ResourceManager::getInstance()->init("Data.bin");
+	
 
     return true;
 }

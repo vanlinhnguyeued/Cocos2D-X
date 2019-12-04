@@ -3,6 +3,7 @@
 #include "MainMenuScene.h"
 #include "SettingScene.h"
 #include "ui/CocosGUI.h"
+#include "ResourceManager.h"
 
 
 
@@ -31,7 +32,7 @@ bool MainMenuScene::init()
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
 	//Set background
-	auto bgrMainMenu = Sprite::create("Sprites/background.png");
+	auto bgrMainMenu = Sprite::createWithSpriteFrame(ResourceManager::getInstance()->getSpriteByID(0)->getSpriteFrame());
 	bgrMainMenu -> setPosition(Vec2(0, 0));
 	bgrMainMenu->setAnchorPoint(Vec2(0, 0));
 	auto targetSizeBGR = Size(visibleSize.width, visibleSize.height);
@@ -40,7 +41,7 @@ bool MainMenuScene::init()
 	addChild(bgrMainMenu);
 
 	//setSprite logo
-	auto logoGame = Sprite::create("Sprites/logo/logo.png");
+	auto logoGame = ResourceManager::getInstance()->getSpriteByID(1);
 	logoGame->setAnchorPoint(Vec2(0.5, 0.5));
 	logoGame->setPosition(Vec2(visibleSize.width / 2, 500));
 	auto targetSizeLogo = Size(250, 200);
@@ -49,7 +50,7 @@ bool MainMenuScene::init()
 	addChild(logoGame);
 
 	//create button Newgame 
-	auto btnNewGame = ui::Button::create("Buttons/play_normal.png", "Button/play_pressed.png", "Buttons/play_normal.png");
+	auto btnNewGame = ResourceManager::getInstance()->getButtonByID(0);
 	btnNewGame->setAnchorPoint(Vec2(0.5, 0.5));
 	btnNewGame->setPosition(Vec2(visibleSize.width/2, visibleSize.height / 2));
 	btnNewGame->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
@@ -73,7 +74,7 @@ bool MainMenuScene::init()
 	addChild(btnNewGame);
 
 	//create button setting
-	auto btnSetting = ui::Button::create("Buttons/setting_normal.png", "Buttons/setting_pressed.png", "Buttons/setting_normal.png");
+	auto btnSetting = ResourceManager::getInstance()->getButtonByID(3);
 	btnSetting->setAnchorPoint(Vec2(0.5, 0.5));
 	btnSetting->setPosition(Vec2(9*visibleSize.width / 10, visibleSize.height/20));
 	btnSetting->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {

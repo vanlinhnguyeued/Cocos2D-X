@@ -53,33 +53,58 @@ void ResourceManager::load(string fileName)
 				i++;
 				istringstream is(SS[i]);
 				is >> text >> numOfImage;
-				string s1 = numOfImage;
-				log("%s", s1.c_str());
+				int s1 = stoi(numOfImage);
 				i++;
 				istringstream iis(SS[i]);
 				iis >> text >> numOfImage;
 				string s2 = numOfImage;
+				Sprite* sprite = Sprite::create(s2);
+				m_Sprites.insert(s1, sprite);
 
 				j--;
 			}
+		}
+		if (text == "#BUTTON") {
+			int j = stoi(numOfImage);
+
+			while (j > 0) {
+				i++;
+				istringstream is(SS[i]);
+				is >> text >> numOfImage;
+				log("%s", numOfImage.c_str());
+				int s1 = stoi(numOfImage);
+				i++;
+				istringstream iis(SS[i]);
+				iis >> text >> numOfImage;
+				string s2 = numOfImage;
+				i++;
+				istringstream iiis(SS[i]);
+				iiis >> text >> numOfImage;
+				string s3 = numOfImage;
+				ui::Button* button = ui::Button::create(s2, s3, s2);
+				m_Buttons.insert(s1, button);
+
+				j--;
+			}
+			
 		}
 	}
 
 	
 }
 
-Sprite * ResourceManager::getSpriteByID(char id)
+Sprite * ResourceManager::getSpriteByID(int id)
 {
 	
-	return nullptr;
+	return m_Sprites.at(id);
 }
 
-ui::Button * ResourceManager::getButtonByID(char id)
+ui::Button * ResourceManager::getButtonByID(int id)
 {
-	return nullptr;
+	return m_Buttons.at(id);
 }
 
-Label * ResourceManager::getLabelByID(char id)
+Label * ResourceManager::getLabelByID(int id)
 {
 	return nullptr;
 }

@@ -4,6 +4,7 @@
 #include "MainMenuScene.h"
 #include "SimpleAudioEngine.h"
 #include "ui/CocosGUI.h"
+#include "ResourceManager.h"
 
 USING_NS_CC;
 
@@ -54,7 +55,7 @@ bool LoadingScene::init()
 	loadingFrame->runAction(moveLoading);
 	loadingFrame->runAction(RepeatForever::create(animate));
 
-	auto spLogo = Sprite::create("Sprites/Logo/logo__.png");
+	auto spLogo = ResourceManager::getInstance()->getSpriteByID(7);
 	spLogo->setAnchorPoint(Vec2(0.5, 0.5));
 	spLogo->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2));
 	addChild(spLogo);
