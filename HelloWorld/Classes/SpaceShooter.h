@@ -11,7 +11,7 @@ public:
 	~SpaceShooter();
 	void init();
 	void update(float deltaTime);
-	void shoot();
+	void shoot(float deltaTime);
 	void conllision(vector<Rock*>);
 private:
 	vector<Objects*> m_Bullets;

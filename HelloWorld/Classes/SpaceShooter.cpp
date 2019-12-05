@@ -2,6 +2,7 @@
 #include"Bullet.h"
 using namespace std;
 
+static float a = 0;
 SpaceShooter::SpaceShooter(cocos2d::Scene * scene)
 {
 	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("ship.plist", "ship.png");
@@ -19,12 +20,12 @@ SpaceShooter::SpaceShooter(cocos2d::Scene * scene)
 	spriteSpaceShip->runAction(RepeatForever::create(animate));
 	this->setSprite(spriteSpaceShip);
 
-	for (int i = 0; i < 20; i++)
+	for (int i = 0; i < 10; i++)
 	{
 		Bullet *bullet = new Bullet(scene);
 		this->m_Bullets.push_back(bullet);
 		scene->addChild(bullet->getSprite());
-		bullet->getSprite()->setVisible(true);
+		bullet->getSprite()->setVisible(false);
 
 	}
 }
@@ -36,31 +37,31 @@ SpaceShooter::~SpaceShooter()
 void SpaceShooter::init()
 {
 }
-static float a = 0;
+
 void SpaceShooter::update(float deltaTime)
+{	
+	this->shoot(deltaTime);
+}
+
+void SpaceShooter::shoot(float deltaTime)
 {
 	a += deltaTime;
-	
 	for (int i = 0; i < m_Bullets.size(); i++)
 	{
-		this->m_Bullets[i]->update(deltaTime);
-		if (!this->m_Bullets[i]->getSprite()->isVisible()==false && a > deltaTime * 10) {
-			this->m_Bullets[i]->getSprite()->setVisible(true);
-			this->m_Bullets[i]->getSprite()->setPosition(this->getSprite()->getPosition().x, this->getSprite()->getPosition().y);
-			a = 0;
-			break;
-		}
-		if (this->m_Bullets[i]->getSprite()->getPosition().y > 1000)
+		if (this->m_Bullets[i]->getSprite()->getPosition().y > 700)
 		{
 			this->m_Bullets[i]->getSprite()->stopAllActions();
 			this->m_Bullets[i]->getSprite()->setVisible(false);
 			this->m_Bullets[i]->getSprite()->setPosition(this->getSprite()->getPosition().x, this->getSprite()->getPosition().y);
 		}
+		if (this->m_Bullets[i]->getSprite()->isVisible() == false && a > deltaTime * 15) {
+			this->m_Bullets[i]->getSprite()->setVisible(true);
+			this->m_Bullets[i]->getSprite()->setPosition(this->getSprite()->getPosition().x, this->getSprite()->getPosition().y);
+			this->m_Bullets[i]->update(deltaTime);
+			a = 0;
+		}
+		
 	}
-}
-
-void SpaceShooter::shoot()
-{
 }
 
 void SpaceShooter::conllision(vector<Rock*>)

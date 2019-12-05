@@ -100,6 +100,7 @@ bool GamePlayScene::init()
 
 void GamePlayScene::update(float deltaTime) {
 	this->generateRock(deltaTime);
+	spaceShooter->update(deltaTime);
 }
 
 void GamePlayScene::generateRock(float deltaTime)
