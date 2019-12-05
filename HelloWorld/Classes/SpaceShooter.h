@@ -15,4 +15,5 @@ public:
 	void conllision(vector<Rock*>);
 private:
 	vector<Objects*> m_Bullets;
+	Scene* scene;
 };

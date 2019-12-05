@@ -101,6 +101,7 @@ bool GamePlayScene::init()
 void GamePlayScene::update(float deltaTime) {
 	this->generateRock(deltaTime);
 	spaceShooter->update(deltaTime);
+	spaceShooter->conllision(m_Rocks);
 }
 
 void GamePlayScene::generateRock(float deltaTime)
