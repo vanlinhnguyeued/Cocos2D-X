@@ -154,7 +154,7 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-<key>1_10.png</key>
+	    <key>1_10.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -200,6 +200,36 @@
                 <false/>
             </dict>
             <key>1_13.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-6,5}</string>
+                <key>spriteSize</key>
+                <string>{176,160}</string>
+                <key>spriteSourceSize</key>
+                <string>{256,256}</string>
+                <key>textureRect</key>
+                <string>{{1,575},{176,160}}</string>
+                <key>textureRotated</key>
+                <true/>
+            </dict>
+	    <key>1_14.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{-6,5}</string>
+                <key>spriteSize</key>
+                <string>{176,160}</string>
+                <key>spriteSourceSize</key>
+                <string>{256,256}</string>
+                <key>textureRect</key>
+                <string>{{1,575},{176,160}}</string>
+                <key>textureRotated</key>
+                <true/>
+            </dict>
+	    <key>1_15.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>

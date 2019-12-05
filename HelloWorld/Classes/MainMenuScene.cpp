@@ -61,7 +61,7 @@ bool MainMenuScene::init()
 		case ui::Widget::TouchEventType::ENDED:
 		{
 			auto GamePlayScene = GamePlayScene::createScene();
-			Director::getInstance()->replaceScene(TransitionFade::create(1, GamePlayScene, Color3B(128, 0, 0)));
+			Director::getInstance()->replaceScene(TransitionFade::create(0.5f, GamePlayScene, Color3B(0, 0, 0)));
 			break;
 		}
 		default:

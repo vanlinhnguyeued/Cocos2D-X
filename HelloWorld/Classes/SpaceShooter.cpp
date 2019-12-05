@@ -1,5 +1,6 @@
 #include"SpaceShooter.h"
 #include"Bullet.h"
+#include "GameOverScene.h"
 using namespace std;
 
 static float a = 0;
@@ -80,7 +81,7 @@ void SpaceShooter::conllision(vector<Rock*> rock)
 			if (spriteRock->getBoundingBox().intersectsRect(spriteBullet->getBoundingBox())&& spriteRock->isVisible() && spriteBullet->isVisible()) {
 				
 				SpriteFrameCache::getInstance()->addSpriteFramesWithFile("red.plist", "red.png");
-				auto red = Sprite::createWithSpriteFrameName("1_1.png");
+				Sprite* red = Sprite::createWithSpriteFrameName("1_15.png");
 				char loadingFrameByName1[30];
 				Vector<SpriteFrame*> redship;
 				for (int i = 1; i < 14; i++)
@@ -107,8 +108,8 @@ void SpaceShooter::conllision(vector<Rock*> rock)
 			}
 			//this->scene->removeChild(lbscore);
 			if (spriteRock->getBoundingBox().intersectsRect(this->getSprite()->getBoundingBox()) && spriteRock->isVisible()) {
-				string a = to_string(score);
-				log("%s", a.c_str());
+				auto scene = GameOverScene::createScene();
+				Director::getInstance()->replaceScene(TransitionFade::create(0.5f, scene, Color3B(0, 0, 0)));
 			}
 			
 		}

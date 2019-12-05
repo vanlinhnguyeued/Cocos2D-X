@@ -76,6 +76,7 @@ bool SettingScene::init()
 	auto menuSetting = Menu::createWithArray(menuItems);
 	menuSetting->setPosition(Vec2(0, 0));
 	addChild(menuSetting);
+
 	auto btnBack = ResourceManager::getInstance()->getButtonByID(4);
 	btnBack->setAnchorPoint(Vec2(0.5, 0.5));
 	btnBack->setPosition(Vec2(20, 500));
