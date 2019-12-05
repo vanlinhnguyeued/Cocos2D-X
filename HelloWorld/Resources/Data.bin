@@ -15,7 +15,7 @@ ID: 6
 PATH: Sprites/Loading/progress.png
 ID: 7
 PATH: Sprites/Logo/logo__.png
-#BUTTON 4
+#BUTTON 5
 ID: 0
 NORMAL_PATH: Buttons/play_normal.png
 PRESSED_PATH: Buttons/play_pressed.png
@@ -28,8 +28,11 @@ PRESSED_PATH: Buttons/home_pressed.png
 ID: 3
 NORMAL_PATH: Buttons/setting_normal.png
 PRESSED_PATH: Buttons/setting_pressed.png
+ID: 4
+NORMAL_PATH: Buttons/leftchevron.png
+PRESSED_PATH: Buttons/leftchevron1.png
 #FONT 2
 ID: 0
-PATH: Fonts/MarkerFelt.ttf
+PATH: fonts/VDOMCAS.TTF
 ID: 1
-PATH: Fonts/arial.ttf
+PATH: fonts/arial.ttf

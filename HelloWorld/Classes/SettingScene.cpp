@@ -2,6 +2,7 @@
 #include "SettingScene.h"
 #include "ui/CocosGUI.h"
 #include "MainMenuScene.h"
+#include "ResourceManager.h"
 
 using namespace cocos2d::ui;
 
@@ -75,6 +76,31 @@ bool SettingScene::init()
 	auto menuSetting = Menu::createWithArray(menuItems);
 	menuSetting->setPosition(Vec2(0, 0));
 	addChild(menuSetting);
+	auto btnBack = ResourceManager::getInstance()->getButtonByID(4);
+	btnBack->setAnchorPoint(Vec2(0.5, 0.5));
+	btnBack->setPosition(Vec2(20, 500));
+	btnBack->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN: {
+
+			break;
+		}
+
+		case ui::Widget::TouchEventType::ENDED:
+		{
+			auto MainMenuScene = MainMenuScene::createScene();
+			Director::getInstance()->replaceScene(TransitionFade::create(1, MainMenuScene, Color3B(128, 0, 0)));
+			break;
+		}
+		default:
+			break;
+		}
+	});
+	auto targetSizeStart = Size(30, 30);
+	auto sizeOrigStart = btnBack->getContentSize();
+	btnBack->setScale((targetSizeStart.width / sizeOrigStart.width), (targetSizeStart.height / sizeOrigStart.height));
+	addChild(btnBack);
 
 	//add text field
 	auto tfNamePlyer = ui::TextField::create("Name player", "fonts/VDOMCAS.TTF", 25);
@@ -208,31 +234,7 @@ bool SettingScene::init()
 	};
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
-	auto btnBack = ui::Button::create("Buttons/leftchevron.png");
-	btnBack->setAnchorPoint(Vec2(0.5, 0.5));
-	btnBack->setPosition(Vec2(20, visibleSize.height *0.9));
-	btnBack->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
-		switch (type)
-		{
-		case ui::Widget::TouchEventType::BEGAN: {
-			
-			break;
-		}
 
-		case ui::Widget::TouchEventType::ENDED:
-		{
-			auto MainMenuScene = MainMenuScene::createScene();
-			Director::getInstance()->replaceScene(TransitionFade::create(1, MainMenuScene, Color3B(128, 0, 0)));
-			break;
-		}
-		default:
-			break;
-		}
-	});
-	auto targetSizeStart = Size(30, 30);
-	auto sizeOrigStart = btnBack->getContentSize();
-	btnBack->setScale((targetSizeStart.width / sizeOrigStart.width), (targetSizeStart.height / sizeOrigStart.height));
-	addChild(btnBack);
 
 	scheduleUpdate();
     return true;

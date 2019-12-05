@@ -3,6 +3,7 @@
 #include "GamePlayScene.h"
 #include <math.h>
 #include "ResourceManager.h"
+#include <ctime>
 
 using namespace cocos2d::ui;
 
@@ -10,9 +11,8 @@ using namespace cocos2d::ui;
 
 USING_NS_CC;
 
-cocos2d::MoveTo* moveRock;
+
 cocos2d::Sprite* spriteSpaceShip;
-cocos2d::Sprite* rock1;
 Scene* GamePlayScene::createScene()
 {
     return GamePlayScene::create();
@@ -101,10 +101,27 @@ bool GamePlayScene::init()
 	};
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(controlSpaceShipByKB, this);
 
+	for (int i = 0; i < 10; i++) {
+		Rock* rockItem = new Rock(this);
+		this->addChild(rockItem->getSprite());
+		rockItem->getSprite()->setPosition(Vec2(i*30, 700));
+		this->m_Rocks.push_back(rockItem);
+	}
+	
+
 	scheduleUpdate();
     return true;
 }
-
+static float a = 0;
 void GamePlayScene::update(float deltaTime) {
-
+	a += deltaTime;
+	if (a > 30 * deltaTime)
+	{
+	for (int i = 0; i < m_Rocks.size(); i++) {
+		
+			m_Rocks[i]->update(deltaTime);
+			a = 0;
+		}
+		
+	}
 }

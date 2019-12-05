@@ -41,7 +41,7 @@ bool MainMenuScene::init()
 	addChild(bgrMainMenu);
 
 	//setSprite logo
-	auto logoGame = ResourceManager::getInstance()->getSpriteByID(1);
+	auto logoGame = Sprite::createWithSpriteFrame(ResourceManager::getInstance()->getSpriteByID(1)->getSpriteFrame());
 	logoGame->setAnchorPoint(Vec2(0.5, 0.5));
 	logoGame->setPosition(Vec2(visibleSize.width / 2, 500));
 	auto targetSizeLogo = Size(250, 200);

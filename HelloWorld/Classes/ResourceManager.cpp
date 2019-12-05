@@ -86,6 +86,25 @@ void ResourceManager::load(string fileName)
 
 				j--;
 			}
+			if (text == "#FONT") {
+				int j = stoi(numOfImage);
+
+				while (j > 0) {
+					i++;
+					istringstream is(SS[i]);
+					is >> text >> numOfImage;
+					log("%s", numOfImage.c_str());
+					int s1 = stoi(numOfImage);
+					i++;
+					istringstream iis(SS[i]);
+					iis >> text >> numOfImage;
+					string s2 = numOfImage;
+					Label* label = Label::createWithTTF("abc", s2, 20);
+					m_Labels.insert(s1, label);
+
+					j--;
+				}
+			}
 			
 		}
 	}
@@ -106,6 +125,6 @@ ui::Button * ResourceManager::getButtonByID(int id)
 
 Label * ResourceManager::getLabelByID(int id)
 {
-	return nullptr;
+	return m_Labels.at(id);
 }
 
