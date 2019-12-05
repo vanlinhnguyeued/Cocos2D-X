@@ -10,6 +10,5 @@ public:
 	~Rock();
 	void init();
 	void update(float deltaTime);
-private:
-	Scene* scene;
+
 };

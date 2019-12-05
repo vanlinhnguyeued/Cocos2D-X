@@ -11,8 +11,8 @@ using namespace cocos2d::ui;
 
 USING_NS_CC;
 
-
-cocos2d::Sprite* spriteSpaceShip;
+static float a = 0;
+SpaceShooter* spaceShooter;
 Scene* GamePlayScene::createScene()
 {
     return GamePlayScene::create();
@@ -34,7 +34,7 @@ bool GamePlayScene::init()
 
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
-
+	//create background
 	auto bgrMainBGR = Sprite::createWithSpriteFrame(ResourceManager::getInstance()->getSpriteByID(0)->getSpriteFrame());
 	bgrMainBGR->setPosition(Vec2(0, 0));
 	bgrMainBGR->setAnchorPoint(Vec2(0, 0));
@@ -43,42 +43,33 @@ bool GamePlayScene::init()
 	bgrMainBGR->setScale((targetSizeBGR.width / sizeOrigBgr.width), (targetSizeBGR.height / sizeOrigBgr.height));
 	addChild(bgrMainBGR);
 
-
-	auto spritespaceshipgCache = SpriteFrameCache::getInstance();
-	spritespaceshipgCache->addSpriteFramesWithFile("ship.plist", "ship.png");
-	const int numSpriteSpaceShip = 8;
-	spriteSpaceShip = Sprite::createWithSpriteFrameName("1.png");
-	spriteSpaceShip->setPosition(Vec2(280, 50));
+	//init rock
+	for (int i = 0; i < 10; i++) {
+		Rock* rockItem = new Rock(this);
+		this->addChild(rockItem->getSprite());
+		rockItem->getSprite()->setPosition(Vec2(i * 50, 700));
+		rockItem->getSprite()->setVisible(false);
+		this->m_Rocks.push_back(rockItem);
+	}
+	//create spaceShip
+	spaceShooter = new SpaceShooter(this);
 	auto targetSizePS = Size(75, 75);
-	auto sizeOrigPS = spriteSpaceShip->getContentSize();
-	spriteSpaceShip->setScale((targetSizePS.width / sizeOrigPS.width), (targetSizePS.height / sizeOrigPS.height));
-	addChild(spriteSpaceShip);
-	Vector<SpriteFrame*> anmSpaceShip;
-	anmSpaceShip.reserve(numSpriteSpaceShip);
-	anmSpaceShip.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("1.png"));
-	anmSpaceShip.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("2.png"));
-	anmSpaceShip.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("3.png"));
-	anmSpaceShip.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("4.png"));
-	anmSpaceShip.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("5.png"));
-	anmSpaceShip.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("6.png"));
-	anmSpaceShip.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("7.png"));
-	anmSpaceShip.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("8.png"));
-	auto animationSpceShip = Animation::createWithSpriteFrames(anmSpaceShip, 0.05f);
-	auto animateSpaceShip = Animate::create(animationSpceShip);
-	spriteSpaceShip->runAction(RepeatForever::create(animateSpaceShip));
-
-
-	//OntouchBeGan
+	auto sizeOrigPS = spaceShooter->getSprite()->getContentSize();
+	spaceShooter->getSprite()->setScale((targetSizePS.width / sizeOrigPS.width), (targetSizePS.height / sizeOrigPS.height));
+	spaceShooter->getSprite()->setAnchorPoint(Vec2(0.5, 0.5));
+	spaceShooter->getSprite()->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 10));
+	this->addChild(spaceShooter->getSprite());
+	
 	auto controlSpaceShipByTouch = EventListenerTouchOneByOne::create();
 	controlSpaceShipByTouch->onTouchBegan = [](Touch* touch, Event* event) {
-		auto time = sqrt(pow(touch->getLocation().x - spriteSpaceShip->getPosition().x, 2)+ pow(touch->getLocation().y - spriteSpaceShip->getPosition().y, 2))/1000;
+		auto time = sqrt(pow(touch->getLocation().x - spaceShooter->getSprite()->getPosition().x, 2)+ pow(touch->getLocation().y - spaceShooter->getSprite()->getPosition().y, 2))/1000;
 		auto moveSpaceShip = MoveTo::create(time, touch->getLocation());
-		spriteSpaceShip->runAction(moveSpaceShip);
+		spaceShooter->getSprite()->runAction(moveSpaceShip);
 		return true;
 	};
 	//OntouchMoved
 	controlSpaceShipByTouch->onTouchMoved = [](Touch* touch, Event* event) {
-		spriteSpaceShip->setPosition(spriteSpaceShip->getPosition()+touch->getDelta());
+		spaceShooter->getSprite()->setPosition(spaceShooter->getSprite()->getPosition()+touch->getDelta());
 	};
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(controlSpaceShipByTouch, this);
 
@@ -86,42 +77,48 @@ bool GamePlayScene::init()
 	controlSpaceShipByKB->onKeyPressed = [](EventKeyboard::KeyCode keyCode, Event* event) {
 		switch (keyCode) {
 		case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
-			spriteSpaceShip->setPosition(Vec2(spriteSpaceShip->getPosition().x - 10.0f, spriteSpaceShip->getPosition().y));
+			spaceShooter->getSprite()->setPosition(Vec2(spaceShooter->getSprite()->getPosition().x - 10.0f, spaceShooter->getSprite()->getPosition().y));
 			break;
 		case EventKeyboard::KeyCode::KEY_UP_ARROW:
-			spriteSpaceShip->setPosition(Vec2(spriteSpaceShip->getPosition().x , spriteSpaceShip->getPosition().y + 10.0f));
+			spaceShooter->getSprite()->setPosition(Vec2(spaceShooter->getSprite()->getPosition().x , spaceShooter->getSprite()->getPosition().y + 10.0f));
 			break;
 		case EventKeyboard::KeyCode::KEY_DOWN_ARROW:
-			spriteSpaceShip->setPosition(Vec2(spriteSpaceShip->getPosition().x, spriteSpaceShip->getPosition().y - 10.0f));
+			spaceShooter->getSprite()->setPosition(Vec2(spaceShooter->getSprite()->getPosition().x, spaceShooter->getSprite()->getPosition().y - 10.0f));
 			break;
 		case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
-			spriteSpaceShip->setPosition(Vec2(spriteSpaceShip->getPosition().x + 10.0f, spriteSpaceShip->getPosition().y));
+			spaceShooter->getSprite()->setPosition(Vec2(spaceShooter->getSprite()->getPosition().x + 10.0f, spaceShooter->getSprite()->getPosition().y));
 			break;
 		}
 	};
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(controlSpaceShipByKB, this);
 
-	for (int i = 0; i < 10; i++) {
-		Rock* rockItem = new Rock(this);
-		this->addChild(rockItem->getSprite());
-		rockItem->getSprite()->setPosition(Vec2(i*30, 700));
-		this->m_Rocks.push_back(rockItem);
-	}
-	
+
 
 	scheduleUpdate();
     return true;
 }
-static float a = 0;
+
 void GamePlayScene::update(float deltaTime) {
+	this->generateRock(deltaTime);
+}
+
+void GamePlayScene::generateRock(float deltaTime)
+{
 	a += deltaTime;
-	if (a > 30 * deltaTime)
-	{
-	for (int i = 0; i < m_Rocks.size(); i++) {
-		
-			m_Rocks[i]->update(deltaTime);
-			a = 0;
+	if (a > 40 * deltaTime) {
+		for (int i = 0; i < m_Rocks.size(); i++) {
+			if (m_Rocks[i]->getSprite()->getPosition().y < -10) {
+				m_Rocks[i]->getSprite()->setVisible(false);
+				m_Rocks[i]->getSprite()->stopAllActions();
+				m_Rocks[i]->getSprite()->setPosition(Vec2(m_Rocks[i]->getSprite()->getPosition().x, 700));
+			}
+			if (m_Rocks[i]->getSprite()->isVisible() == false) {
+				m_Rocks[i]->update(deltaTime);
+				m_Rocks[i]->getSprite()->setVisible(true);
+				i = m_Rocks.size();
+				a = 0;
+			}
+			
 		}
-		
 	}
 }
