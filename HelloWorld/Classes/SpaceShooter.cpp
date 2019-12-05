@@ -56,7 +56,7 @@ void SpaceShooter::shoot(float deltaTime)
 			this->m_Bullets[i]->getSprite()->setVisible(false);
 			this->m_Bullets[i]->getSprite()->setPosition(this->getSprite()->getPosition().x, this->getSprite()->getPosition().y);
 		}
-		if (this->m_Bullets[i]->getSprite()->isVisible() == false && a > deltaTime * 15) {
+		if (this->m_Bullets[i]->getSprite()->isVisible() == false && a > deltaTime * 8) {
 			this->m_Bullets[i]->getSprite()->setVisible(true);
 			this->m_Bullets[i]->getSprite()->setPosition(this->getSprite()->getPosition().x, this->getSprite()->getPosition().y);
 			this->m_Bullets[i]->update(deltaTime);
@@ -65,30 +65,50 @@ void SpaceShooter::shoot(float deltaTime)
 		
 	}
 }
-static int score = 0;
+int score = 1;
 string s;
+Label* lbscore;
 void SpaceShooter::conllision(vector<Rock*> rock)
 {
 	for (int i = 0; i < rock.size(); i++) {
 		auto spriteRock = rock[i]->getSprite();
-		if (this->getSprite()->getBoundingBox().intersectsRect(spriteRock->getBoundingBox()) && spriteRock->isVisible()) {
-			log("game over");
-		}
+		
 		for (int j = 1; j < m_Bullets.size(); j++) {
-			Label* lbscore = Label::createWithTTF("0", "fonts/VDOMCAS.TTF", 20);
+			
 			auto spriteBullet = m_Bullets[i]->getSprite();
-			if (spriteBullet->getBoundingBox().intersectsRect(spriteRock->getBoundingBox())&& spriteRock->isVisible() && spriteBullet->isVisible()) {
-				lbscore->setString("");
+			lbscore = Label::createWithTTF("0", "fonts/VDOMCAS.TTF", 30);
+			if (spriteRock->getBoundingBox().intersectsRect(spriteBullet->getBoundingBox())&& spriteRock->isVisible() && spriteBullet->isVisible()) {
+				
+				SpriteFrameCache::getInstance()->addSpriteFramesWithFile("red.plist", "red.png");
+				auto red = Sprite::createWithSpriteFrameName("1_1.png");
+				char loadingFrameByName1[30];
+				Vector<SpriteFrame*> redship;
+				for (int i = 1; i < 14; i++)
+				{
+					sprintf(loadingFrameByName1, "1_%d.png", i);
+					auto frame1 = SpriteFrameCache::getInstance()->getSpriteFrameByName(loadingFrameByName1);
+					redship.pushBack(frame1);
+				}
+				Animation* animation = Animation::createWithSpriteFrames(redship, 0.05f);
+				Animate* animate = Animate::create(animation);
+				red->setAnchorPoint(Vec2(0.5, 0.5));
+				red->setPosition(Vec2(spriteRock->getPosition().x, spriteRock->getPosition().y));
+				red->runAction(Repeat::create(animate, 1));
+				this->scene->addChild(red);
 				score++;
 				s = to_string(score);
-				lbscore->updateContent(s);
-				lbscore->setPosition(Vec2(200, 500));
+				lbscore->setString(s);
+				lbscore->setPosition(Vec2(283, 630));
 				this->scene->addChild(lbscore);
 				spriteRock->setPosition(spriteRock->getPosition().x, -10);
 				spriteBullet->setPosition(spriteBullet->getPosition().x, 700);
 				spriteBullet->setVisible(false);
 				spriteRock->setVisible(false);
-				
+			}
+			//this->scene->removeChild(lbscore);
+			if (spriteRock->getBoundingBox().intersectsRect(this->getSprite()->getBoundingBox()) && spriteRock->isVisible()) {
+				string a = to_string(score);
+				log("%s", a.c_str());
 			}
 			
 		}

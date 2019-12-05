@@ -18,7 +18,7 @@ void Bullet::init()
 
 void Bullet::update(float deltaTime)
 {
-	auto move = MoveBy::create(deltaTime*100, Vec2(0, 700));
+	auto move = MoveBy::create(deltaTime*50, Vec2(0, 700));
 	this->getSprite()->runAction(move);
 }
 

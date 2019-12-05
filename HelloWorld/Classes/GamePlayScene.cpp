@@ -34,6 +34,7 @@ bool GamePlayScene::init()
 
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
+
 	//create background
 	auto bgrMainBGR = Sprite::createWithSpriteFrame(ResourceManager::getInstance()->getSpriteByID(0)->getSpriteFrame());
 	bgrMainBGR->setPosition(Vec2(0, 0));
@@ -42,6 +43,11 @@ bool GamePlayScene::init()
 	auto sizeOrigBgr = bgrMainBGR->getContentSize();
 	bgrMainBGR->setScale((targetSizeBGR.width / sizeOrigBgr.width), (targetSizeBGR.height / sizeOrigBgr.height));
 	addChild(bgrMainBGR);
+
+	Label* score = Label::createWithTTF("Your score:", "fonts/VDOMCAS.TTF", 30);
+	score->setAnchorPoint(Vec2(0.5, 0.5));
+	score->setPosition(Vec2(203, 630));
+	addChild(score);
 
 	//init rock
 	for (int i = 0; i < 10; i++) {
