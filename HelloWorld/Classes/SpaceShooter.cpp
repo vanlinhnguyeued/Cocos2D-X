@@ -76,6 +76,23 @@ void SpaceShooter::shoot(float deltaTime)
 
 void SpaceShooter::conllision(vector<Rock*> rock)
 {
+	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("red.plist", "red.png");
+	Sprite* red = Sprite::createWithSpriteFrameName("1_15.png");
+	char loadingFrameByName1[30];
+	Vector<SpriteFrame*> redship;
+	for (int i = 1; i < 14; i++)
+	{
+		sprintf(loadingFrameByName1, "1_%d.png", i);
+		auto frame1 = SpriteFrameCache::getInstance()->getSpriteFrameByName(loadingFrameByName1);
+		redship.pushBack(frame1);
+	}
+	Animation* animation = Animation::createWithSpriteFrames(redship, 0.05f);
+	Animate* animate = Animate::create(animation);
+	red->setAnchorPoint(Vec2(0.5, 0.5));
+	red->setVisible(false);
+	red->runAction(Repeat::create(animate, 1));
+	this->scene->addChild(red);
+
 	for (int i = 0; i < rock.size(); i++) {
 		auto spriteRock = rock[i]->getSprite();
 		
@@ -84,23 +101,8 @@ void SpaceShooter::conllision(vector<Rock*> rock)
 			auto spriteBullet = m_Bullets[i]->getSprite();
 			
 			if (spriteRock->getBoundingBox().intersectsRect(spriteBullet->getBoundingBox())&& spriteRock->isVisible() && spriteBullet->isVisible()) {
-				
-				SpriteFrameCache::getInstance()->addSpriteFramesWithFile("red.plist", "red.png");
-				Sprite* red = Sprite::createWithSpriteFrameName("1_15.png");
-				char loadingFrameByName1[30];
-				Vector<SpriteFrame*> redship;
-				for (int i = 1; i < 14; i++)
-				{
-					sprintf(loadingFrameByName1, "1_%d.png", i);
-					auto frame1 = SpriteFrameCache::getInstance()->getSpriteFrameByName(loadingFrameByName1);
-					redship.pushBack(frame1);
-				}
-				Animation* animation = Animation::createWithSpriteFrames(redship, 0.05f);
-				Animate* animate = Animate::create(animation);
-				red->setAnchorPoint(Vec2(0.5, 0.5));
 				red->setPosition(Vec2(spriteRock->getPosition().x, spriteRock->getPosition().y));
-				red->runAction(Repeat::create(animate, 1));
-				this->scene->addChild(red);
+				red->setVisible(true);
 				score++;
 				s = to_string(score);
 				lbscore->setString(s);
@@ -108,11 +110,15 @@ void SpaceShooter::conllision(vector<Rock*> rock)
 				spriteBullet->setPosition(spriteBullet->getPosition().x, 700);
 				spriteBullet->setVisible(false);
 				spriteRock->setVisible(false);
+				
 			}
+			//this->scene->removeChild(red);
+			
 			//this->scene->removeChild(lbscore);
 			if (spriteRock->getBoundingBox().intersectsRect(this->getSprite()->getBoundingBox()) && spriteRock->isVisible()) {
 				ResourceManager::getInstance()->setScore(s, "score.bin");
 				ResourceManager::getInstance()->setHightScore(score);
+				ResourceManager::getInstance()->saveHightScore("hightScore.bin");
 				score = 0;
 				auto scene = GameOverScene::createScene();
 				Director::getInstance()->replaceScene(TransitionFade::create(0.5f, scene, Color3B(0, 0, 0)));

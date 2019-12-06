@@ -131,9 +131,15 @@ string ResourceManager::getScore()
 	return this->m_Score;
 }
 
-int ResourceManager::getHightScore()
+string ResourceManager::getHightScore(string path)
 {
-	return this->m_HightScore;
+	auto stHS = FileUtils::getInstance()->getStringFromFile(path);
+	return stHS;
+}
+
+void ResourceManager::saveHightScore(string path)
+{
+	FileUtils::getInstance()->writeStringToFile(to_string(this->m_HightScore), path);
 }
 
 Sprite * ResourceManager::getSpriteByID(int id)

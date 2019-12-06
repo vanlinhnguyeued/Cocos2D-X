@@ -26,8 +26,8 @@ public:
 	void setScore(string score, string path);
 	void setHightScore(int score);
 	string getScore();
-	int getHightScore();
-	void saveHightScore();
+	string getHightScore(string path);
+	void saveHightScore(string path);
 	Sprite* getSpriteByID(int id);
 	ui::Button* getButtonByID(int id);
 	Label* getLabelByID(int id);
