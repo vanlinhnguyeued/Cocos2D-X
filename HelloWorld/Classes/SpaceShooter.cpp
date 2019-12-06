@@ -112,6 +112,7 @@ void SpaceShooter::conllision(vector<Rock*> rock)
 			//this->scene->removeChild(lbscore);
 			if (spriteRock->getBoundingBox().intersectsRect(this->getSprite()->getBoundingBox()) && spriteRock->isVisible()) {
 				ResourceManager::getInstance()->setScore(s, "score.bin");
+				ResourceManager::getInstance()->setHightScore(score);
 				score = 0;
 				auto scene = GameOverScene::createScene();
 				Director::getInstance()->replaceScene(TransitionFade::create(0.5f, scene, Color3B(0, 0, 0)));

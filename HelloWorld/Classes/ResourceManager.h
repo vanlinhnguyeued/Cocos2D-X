@@ -12,7 +12,8 @@ private:
 	Map<int, Sprite*> m_Sprites;
 	Map<int, ui::Button*> m_Buttons;
 	Map<int, Label*> m_Labels;
-	string m_score;
+	string m_Score;
+	int m_HightScore=0;
 	ResourceManager();
 	
 
@@ -23,7 +24,10 @@ public:
 	void init(const string path);
 	void load(string fileName);
 	void setScore(string score, string path);
+	void setHightScore(int score);
 	string getScore();
+	int getHightScore();
+	void saveHightScore();
 	Sprite* getSpriteByID(int id);
 	ui::Button* getButtonByID(int id);
 	Label* getLabelByID(int id);

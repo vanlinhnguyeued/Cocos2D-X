@@ -3,6 +3,7 @@
 using namespace std;
 
 ResourceManager* ResourceManager::s_instance;
+
 ResourceManager::ResourceManager()
 {
 }
@@ -114,13 +115,25 @@ void ResourceManager::load(string fileName)
 
 void ResourceManager::setScore(string score, string path)
 {
-	this->m_score = score;
-	FileUtils::getInstance()->writeStringToFile(m_score, path);
+	this->m_Score = score;
+	FileUtils::getInstance()->writeStringToFile(m_Score, path);
+}
+
+void ResourceManager::setHightScore(int score)
+{
+	if (score > this->m_HightScore) {
+		this->m_HightScore = score;
+	}
 }
 
 string ResourceManager::getScore()
 {
-	return this->m_score;
+	return this->m_Score;
+}
+
+int ResourceManager::getHightScore()
+{
+	return this->m_HightScore;
 }
 
 Sprite * ResourceManager::getSpriteByID(int id)
