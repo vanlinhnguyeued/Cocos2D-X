@@ -1,9 +1,13 @@
 #include"SpaceShooter.h"
 #include"Bullet.h"
 #include "GameOverScene.h"
+#include "ResourceManager.h"
 using namespace std;
 
 static float a = 0;
+int score = 0;
+string s;
+Label* lbscore;
 SpaceShooter::SpaceShooter(cocos2d::Scene * scene)
 {
 	this->scene = scene;
@@ -31,6 +35,9 @@ SpaceShooter::SpaceShooter(cocos2d::Scene * scene)
 		bullet->getSprite()->setVisible(false);
 
 	}
+	lbscore = Label::createWithTTF("0", "fonts/VDOMCAS.TTF", 30);
+	lbscore->setPosition(Vec2(283, 630));
+	this->scene->addChild(lbscore);
 }
 
 SpaceShooter::~SpaceShooter()
@@ -66,9 +73,7 @@ void SpaceShooter::shoot(float deltaTime)
 		
 	}
 }
-int score = 1;
-string s;
-Label* lbscore;
+
 void SpaceShooter::conllision(vector<Rock*> rock)
 {
 	for (int i = 0; i < rock.size(); i++) {
@@ -77,7 +82,7 @@ void SpaceShooter::conllision(vector<Rock*> rock)
 		for (int j = 1; j < m_Bullets.size(); j++) {
 			
 			auto spriteBullet = m_Bullets[i]->getSprite();
-			lbscore = Label::createWithTTF("0", "fonts/VDOMCAS.TTF", 30);
+			
 			if (spriteRock->getBoundingBox().intersectsRect(spriteBullet->getBoundingBox())&& spriteRock->isVisible() && spriteBullet->isVisible()) {
 				
 				SpriteFrameCache::getInstance()->addSpriteFramesWithFile("red.plist", "red.png");
@@ -99,8 +104,6 @@ void SpaceShooter::conllision(vector<Rock*> rock)
 				score++;
 				s = to_string(score);
 				lbscore->setString(s);
-				lbscore->setPosition(Vec2(283, 630));
-				this->scene->addChild(lbscore);
 				spriteRock->setPosition(spriteRock->getPosition().x, -10);
 				spriteBullet->setPosition(spriteBullet->getPosition().x, 700);
 				spriteBullet->setVisible(false);
@@ -108,8 +111,11 @@ void SpaceShooter::conllision(vector<Rock*> rock)
 			}
 			//this->scene->removeChild(lbscore);
 			if (spriteRock->getBoundingBox().intersectsRect(this->getSprite()->getBoundingBox()) && spriteRock->isVisible()) {
+				ResourceManager::getInstance()->setScore(s, "score.bin");
+				score = 0;
 				auto scene = GameOverScene::createScene();
 				Director::getInstance()->replaceScene(TransitionFade::create(0.5f, scene, Color3B(0, 0, 0)));
+
 			}
 			
 		}

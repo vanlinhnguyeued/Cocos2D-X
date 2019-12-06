@@ -114,7 +114,7 @@ bool SettingScene::init()
 	soundLayer = cocos2d::LayerColor::create(Color4B(255, 208, 97, 255));
 	soundLayer->setPosition(Vec2(0, visibleSize.height*0.1f));
 	soundLayer->setContentSize(cocos2d::Size(visibleSize.width, visibleSize.height*0.8));
-	
+	//ResourceManager::getInstance()->getLabelByID(1)
 	auto lbSound = Label::createWithTTF("Sound", "fonts/VDOMCAS.TTF", 35);
 	lbSound->setAnchorPoint(Vec2(0.5, 0.5));
 	lbSound->setColor(cocos2d::Color3B(180, 209, 218));

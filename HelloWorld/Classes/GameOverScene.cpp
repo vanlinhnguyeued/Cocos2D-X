@@ -46,6 +46,19 @@ bool GameOverScene::init()
 	lbGO->setAnchorPoint(Vec2(0.5, 0.5));
 	lbGO->setPosition(Vec2(visibleSize.width/2, visibleSize.height*0.7));
 	addChild(lbGO);
+	auto lbYS = Label::createWithTTF("Your score:", "fonts/VDOMCAS.TTF", 20);
+	lbYS->setAnchorPoint(Vec2(0.5, 0.5));
+	lbYS->setPosition(Vec2(visibleSize.width / 2.5, visibleSize.height*0.6));
+	addChild(lbYS);
+
+	auto score = ResourceManager::getInstance()->getScore();
+	log("%s", score.c_str());
+	auto lbscore = Label::createWithTTF("Your score:", "fonts/VDOMCAS.TTF", 20);
+	lbscore->setString(score);
+	lbscore->setAnchorPoint(Vec2(0.5, 0.5));
+	lbscore->setPosition(Vec2(visibleSize.width /2.5+60, visibleSize.height*0.6));
+	addChild(lbscore);
+
 	//ResourceManager::getInstance()->getButtonByID(2)
 	auto btnBackHome = ui::Button::create("Buttons/home_normal.png", "Buttons/home_pressed.png", "Buttons/home_normal.png");
 	btnBackHome->setAnchorPoint(Vec2(0.5, 0.5));
@@ -60,8 +73,10 @@ bool GameOverScene::init()
 
 		case ui::Widget::TouchEventType::ENDED:
 		{
+			
 			auto MainMenuScene = MainMenuScene::createScene();
 			Director::getInstance()->replaceScene(TransitionFade::create(0.5f, MainMenuScene, Color3B(0, 0, 0)));
+
 			break;
 		}
 		default:
@@ -86,6 +101,7 @@ bool GameOverScene::init()
 
 		case ui::Widget::TouchEventType::ENDED:
 		{
+			removeChild(lbscore);
 			auto GamePlayScene = GamePlayScene::createScene();
 			Director::getInstance()->replaceScene(TransitionFade::create(0.5f, GamePlayScene, Color3B(0, 0, 0)));
 			break;

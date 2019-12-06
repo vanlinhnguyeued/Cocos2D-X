@@ -12,6 +12,7 @@ private:
 	Map<int, Sprite*> m_Sprites;
 	Map<int, ui::Button*> m_Buttons;
 	Map<int, Label*> m_Labels;
+	string m_score;
 	ResourceManager();
 	
 
@@ -21,6 +22,8 @@ public:
 	static ResourceManager* getInstance();
 	void init(const string path);
 	void load(string fileName);
+	void setScore(string score, string path);
+	string getScore();
 	Sprite* getSpriteByID(int id);
 	ui::Button* getButtonByID(int id);
 	Label* getLabelByID(int id);

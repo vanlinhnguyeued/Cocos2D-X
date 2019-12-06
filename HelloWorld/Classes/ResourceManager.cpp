@@ -112,6 +112,17 @@ void ResourceManager::load(string fileName)
 	
 }
 
+void ResourceManager::setScore(string score, string path)
+{
+	this->m_score = score;
+	FileUtils::getInstance()->writeStringToFile(m_score, path);
+}
+
+string ResourceManager::getScore()
+{
+	return this->m_score;
+}
+
 Sprite * ResourceManager::getSpriteByID(int id)
 {
 	
