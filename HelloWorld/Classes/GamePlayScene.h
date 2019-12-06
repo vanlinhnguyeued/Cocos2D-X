@@ -13,5 +13,8 @@ public:
     virtual bool init();
 	void update(float delaTime);
 	void generateRock(float deltaTime);
+	bool onTouchBegan(Touch* touch, Event* event);
+	bool onTouchEnded(Touch* touch, Event* event);
+	bool onTouchMoved(Touch* touch, Event* event);
     CREATE_FUNC(GamePlayScene);
 };

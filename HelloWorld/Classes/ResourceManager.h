@@ -23,10 +23,10 @@ public:
 	static ResourceManager* getInstance();
 	void init(const string path);
 	void load(string fileName);
-	void setScore(string score, string path);
+	void setScore(string score);
 	void setHightScore(int score);
 	string getScore();
-	string getHightScore(string path);
+	int getHightScore();
 	void saveHightScore(string path);
 	Sprite* getSpriteByID(int id);
 	ui::Button* getButtonByID(int id);

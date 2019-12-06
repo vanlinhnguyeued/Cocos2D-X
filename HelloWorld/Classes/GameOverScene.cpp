@@ -64,9 +64,9 @@ bool GameOverScene::init()
 	lbscore->setPosition(Vec2(visibleSize.width /2.5+60, visibleSize.height*0.6));
 	addChild(lbscore);
 
-	auto hightScore = ResourceManager::getInstance()->getHightScore("hightScore.bin");
+	auto hightScore = ResourceManager::getInstance()->getHightScore();
 	auto lbHscore = Label::createWithTTF("", "fonts/VDOMCAS.TTF", 20);
-	lbHscore->setString(hightScore);
+	lbHscore->setString(to_string(hightScore));
 	lbHscore->setAnchorPoint(Vec2(0.5, 0.5));
 	lbHscore->setPosition(Vec2(visibleSize.width / 2.5 + 60, visibleSize.height*0.5));
 	addChild(lbHscore);

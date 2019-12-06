@@ -65,41 +65,14 @@ bool GamePlayScene::init()
 	spaceShooter->getSprite()->setAnchorPoint(Vec2(0.5, 0.5));
 	spaceShooter->getSprite()->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 10));
 	this->addChild(spaceShooter->getSprite());
+
+	auto listener = EventListenerTouchOneByOne::create();
+	listener->onTouchBegan = CC_CALLBACK_2(GamePlayScene::onTouchBegan, this);
+	listener->onTouchMoved = CC_CALLBACK_2(GamePlayScene::onTouchMoved, this);
+	listener->onTouchEnded = CC_CALLBACK_2(GamePlayScene::onTouchEnded, this);
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+
 	
-	auto controlSpaceShipByTouch = EventListenerTouchOneByOne::create();
-	controlSpaceShipByTouch->onTouchBegan = [](Touch* touch, Event* event) {
-		auto time = sqrt(pow(touch->getLocation().x - spaceShooter->getSprite()->getPosition().x, 2)+ pow(touch->getLocation().y - spaceShooter->getSprite()->getPosition().y, 2))/1000;
-		auto moveSpaceShip = MoveTo::create(time, touch->getLocation());
-		spaceShooter->getSprite()->runAction(moveSpaceShip);
-		return true;
-	};
-	//OntouchMoved
-	controlSpaceShipByTouch->onTouchMoved = [](Touch* touch, Event* event) {
-		spaceShooter->getSprite()->setPosition(spaceShooter->getSprite()->getPosition()+touch->getDelta());
-	};
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(controlSpaceShipByTouch, this);
-
-	auto controlSpaceShipByKB = EventListenerKeyboard::create();
-	controlSpaceShipByKB->onKeyPressed = [](EventKeyboard::KeyCode keyCode, Event* event) {
-		switch (keyCode) {
-		case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
-			spaceShooter->getSprite()->setPosition(Vec2(spaceShooter->getSprite()->getPosition().x - 10.0f, spaceShooter->getSprite()->getPosition().y));
-			break;
-		case EventKeyboard::KeyCode::KEY_UP_ARROW:
-			spaceShooter->getSprite()->setPosition(Vec2(spaceShooter->getSprite()->getPosition().x , spaceShooter->getSprite()->getPosition().y + 10.0f));
-			break;
-		case EventKeyboard::KeyCode::KEY_DOWN_ARROW:
-			spaceShooter->getSprite()->setPosition(Vec2(spaceShooter->getSprite()->getPosition().x, spaceShooter->getSprite()->getPosition().y - 10.0f));
-			break;
-		case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
-			spaceShooter->getSprite()->setPosition(Vec2(spaceShooter->getSprite()->getPosition().x + 10.0f, spaceShooter->getSprite()->getPosition().y));
-			break;
-		}
-	};
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(controlSpaceShipByKB, this);
-
-
-
 	scheduleUpdate();
     return true;
 }
@@ -129,4 +102,23 @@ void GamePlayScene::generateRock(float deltaTime)
 			
 		}
 	}
+}
+
+bool GamePlayScene::onTouchBegan(Touch * touch, Event * event)
+{
+	auto time = sqrt(pow(touch->getLocation().x - spaceShooter->getSprite()->getPosition().x, 2) + pow(touch->getLocation().y - spaceShooter->getSprite()->getPosition().y, 2)) / 1000;
+	auto moveSpaceShip = MoveTo::create(time, touch->getLocation());
+	spaceShooter->getSprite()->runAction(moveSpaceShip);
+	return true;
+}
+
+bool GamePlayScene::onTouchEnded(Touch * touch, Event * event)
+{
+	return false;
+}
+
+bool GamePlayScene::onTouchMoved(Touch * touch, Event * event)
+{
+	spaceShooter->getSprite()->setPosition(spaceShooter->getSprite()->getPosition() + touch->getDelta());
+	return true;
 }

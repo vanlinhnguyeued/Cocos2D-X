@@ -113,10 +113,9 @@ void ResourceManager::load(string fileName)
 	
 }
 
-void ResourceManager::setScore(string score, string path)
+void ResourceManager::setScore(string score)
 {
 	this->m_Score = score;
-	FileUtils::getInstance()->writeStringToFile(m_Score, path);
 }
 
 void ResourceManager::setHightScore(int score)
@@ -131,10 +130,9 @@ string ResourceManager::getScore()
 	return this->m_Score;
 }
 
-string ResourceManager::getHightScore(string path)
+int ResourceManager::getHightScore()
 {
-	auto stHS = FileUtils::getInstance()->getStringFromFile(path);
-	return stHS;
+	return this->m_HightScore;
 }
 
 void ResourceManager::saveHightScore(string path)

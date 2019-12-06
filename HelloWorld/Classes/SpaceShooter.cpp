@@ -116,7 +116,7 @@ void SpaceShooter::conllision(vector<Rock*> rock)
 			
 			//this->scene->removeChild(lbscore);
 			if (spriteRock->getBoundingBox().intersectsRect(this->getSprite()->getBoundingBox()) && spriteRock->isVisible()) {
-				ResourceManager::getInstance()->setScore(s, "score.bin");
+				ResourceManager::getInstance()->setScore(s);
 				ResourceManager::getInstance()->setHightScore(score);
 				ResourceManager::getInstance()->saveHightScore("hightScore.bin");
 				score = 0;
