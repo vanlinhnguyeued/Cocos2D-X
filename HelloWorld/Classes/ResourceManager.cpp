@@ -1,5 +1,6 @@
 #include "RESOURCEMANAGER.H"
 #include <stdio.h>
+#include "string"
 using namespace std;
 
 ResourceManager* ResourceManager::s_instance;
@@ -23,6 +24,7 @@ ResourceManager * ResourceManager::getInstance()
 
 void ResourceManager::init(const string path)
 {
+	this->m_HightScore = stoi(FileUtils::getInstance()->getStringFromFile("highScore.bin"));
 	m_dataFoderPath = path;
 	load(m_dataFoderPath);
 }
@@ -118,27 +120,21 @@ void ResourceManager::setScore(string score)
 	this->m_Score = score;
 }
 
-void ResourceManager::setHightScore(int score)
-{
-	if (score > this->m_HightScore) {
-		this->m_HightScore = score;
-	}
-}
-
 string ResourceManager::getScore()
 {
 	return this->m_Score;
 }
 
-int ResourceManager::getHightScore()
+void ResourceManager::setHighScore(int score)
+{
+	this->m_HightScore = score;
+}
+
+int ResourceManager::getHighScore()
 {
 	return this->m_HightScore;
 }
 
-void ResourceManager::saveHightScore(string path)
-{
-	FileUtils::getInstance()->writeStringToFile(to_string(this->m_HightScore), path);
-}
 
 Sprite * ResourceManager::getSpriteByID(int id)
 {

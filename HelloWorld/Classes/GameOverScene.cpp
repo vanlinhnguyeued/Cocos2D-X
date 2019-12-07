@@ -56,20 +56,19 @@ bool GameOverScene::init()
 	lbHS->setPosition(Vec2(visibleSize.width / 2.5, visibleSize.height*0.5));
 	addChild(lbHS);
 
-	auto score = ResourceManager::getInstance()->getScore();
+	string score = ResourceManager::getInstance()->getScore();
 	log("%s", score.c_str());
-	auto lbscore = Label::createWithTTF("Your score:", "fonts/VDOMCAS.TTF", 20);
-	lbscore->setString(score);
+	auto lbscore = Label::createWithTTF(score, "fonts/VDOMCAS.TTF", 20);
 	lbscore->setAnchorPoint(Vec2(0.5, 0.5));
 	lbscore->setPosition(Vec2(visibleSize.width /2.5+60, visibleSize.height*0.6));
 	addChild(lbscore);
 
-	auto hightScore = ResourceManager::getInstance()->getHightScore();
 	auto lbHscore = Label::createWithTTF("", "fonts/VDOMCAS.TTF", 20);
-	lbHscore->setString(to_string(hightScore));
+	lbHscore->setString(to_string(ResourceManager::getInstance()->getHighScore()));
 	lbHscore->setAnchorPoint(Vec2(0.5, 0.5));
 	lbHscore->setPosition(Vec2(visibleSize.width / 2.5 + 60, visibleSize.height*0.5));
 	addChild(lbHscore);
+	FileUtils::getInstance()->writeStringToFile(to_string(ResourceManager::getInstance()->getHighScore()), "highScore.bin");
 
 	//ResourceManager::getInstance()->getButtonByID(2)
 	auto btnBackHome = ui::Button::create("Buttons/home_normal.png", "Buttons/home_pressed.png", "Buttons/home_normal.png");
