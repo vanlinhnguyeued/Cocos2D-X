@@ -13,6 +13,7 @@ public:
 	void update(float deltaTime);
 	void shoot(float deltaTime);
 	void conllision(vector<Rock*>);
+	void initMap();
 private:
 	vector<Objects*> m_Bullets;
 	Scene* scene;

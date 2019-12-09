@@ -11,8 +11,11 @@ static float a = 0;
 int score = 0;
 string s;
 Label* lbscore;
+TMXTiledMap*map1;
 SpaceShooter::SpaceShooter(cocos2d::Scene * scene)
 {
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 	this->scene = scene;
 	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("ship.plist", "ship.png");
 	auto spriteSpaceShip = Sprite::createWithSpriteFrameName("1.png");
@@ -41,6 +44,15 @@ SpaceShooter::SpaceShooter(cocos2d::Scene * scene)
 	lbscore = Label::createWithTTF("0", "fonts/VDOMCAS.TTF", 30);
 	lbscore->setPosition(Vec2(283, 630));
 	this->scene->addChild(lbscore);
+
+	map1 = TMXTiledMap::create("TileMaps/bg.tmx");
+	map1->setVisible(false);
+	map1->setAnchorPoint(Vec2(0, 0));
+	map1->setPosition(Vec2(0, 700));
+	auto targetSizeBGR = Size(visibleSize.width, visibleSize.height);
+	auto sizeOrigBgr = map1->getContentSize();
+	map1->setScale((targetSizeBGR.width / sizeOrigBgr.width), (targetSizeBGR.height / sizeOrigBgr.height));
+	this->scene->addChild(map1,0);
 }
 
 SpaceShooter::~SpaceShooter()
@@ -77,9 +89,12 @@ void SpaceShooter::shoot(float deltaTime)
 		
 	}
 }
-Sprite* blue;
+
 void SpaceShooter::conllision(vector<Rock*> rock)
 {
+	
+	
+
 	for (int i = 0; i < rock.size(); i++) {
 		auto spriteRock = rock[i]->getSprite();
 		for (int j = 0; j < m_Bullets.size(); j++) {
@@ -108,12 +123,18 @@ void SpaceShooter::conllision(vector<Rock*> rock)
 				auto scene = GameOverScene::createScene();
 				Director::getInstance()->replaceScene(scene);
 				break;
-				//this->getSprite()->setVisible(false);
 				score = 0;
 
 			}
-			
+			if (score == 20&&!map1->isVisible()) {
+				map1->setVisible(true);
+				auto moveTo = MoveTo::create(4.0f, Vec2(0, 0));
+				map1->runAction(moveTo);
+			}
 		}
 	}
 	
+}
+void SpaceShooter::initMap() {
+
 }
