@@ -11,7 +11,7 @@ using namespace CocosDenshion;
 USING_NS_CC;
 auto bgrMusicMM = SimpleAudioEngine::getInstance();
 
-
+auto bgrMusicPlayGame = SimpleAudioEngine::getInstance();
 Scene* MainMenuScene::createScene()
 {
     return MainMenuScene::create();
@@ -67,6 +67,7 @@ bool MainMenuScene::init()
 			auto GamePlayScene = GamePlayScene::createScene();
 			Director::getInstance()->replaceScene(TransitionFade::create(0.5f, GamePlayScene, Color3B(0, 0, 0)));
 			bgrMusicMM->stopBackgroundMusic();
+			bgrMusicPlayGame->playBackgroundMusic("Sounds/ingame.mp3");
 			break;
 		}
 		default:
