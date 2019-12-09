@@ -4,6 +4,7 @@
 #include "SettingScene.h"
 #include "ui/CocosGUI.h"
 #include "ResourceManager.h"
+#include <ctime>
 
 
 
@@ -95,6 +96,12 @@ bool MainMenuScene::init()
 	auto sizeOrigSetting = btnSetting->getContentSize();
 	btnSetting->setScale((targetSizeSetting.width / sizeOrigSetting.width), (targetSizeSetting.height / sizeOrigSetting.height));
 	addChild(btnSetting);
+
+	auto particleMM = ParticleGalaxy::create();
+	particleMM->setScale(0.8);
+	particleMM->setAnchorPoint(Vec2(0.5, 0.5));
+	particleMM->setPosition(Vec2(visibleSize.width / 2+80, 550));
+	addChild(particleMM);
 
 	scheduleUpdate();
     return true;

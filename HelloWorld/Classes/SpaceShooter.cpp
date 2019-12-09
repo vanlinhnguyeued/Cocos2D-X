@@ -75,7 +75,7 @@ void SpaceShooter::shoot(float deltaTime)
 }
 Sprite* blue;
 void SpaceShooter::conllision(vector<Rock*> rock)
-{
+{/*
 	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Sprites/Blue/blue.plist", "Sprites/Blue/blue.png");
 	blue = Sprite::createWithSpriteFrameName("1_16.png");
 	char loadingFrameByName1[30];
@@ -91,15 +91,19 @@ void SpaceShooter::conllision(vector<Rock*> rock)
 	blue->setAnchorPoint(Vec2(0.5, 0.5));
 	blue->runAction(Repeat::create(animate->clone(), 1));
 	blue->setVisible(false);
-	this->scene->addChild(blue);
+	this->scene->addChild(blue);*/
 	for (int i = 0; i < rock.size(); i++) {
 		auto spriteRock = rock[i]->getSprite();
 		for (int j = 1; j < m_Bullets.size(); j++) {
 			auto spriteBullet = m_Bullets[i]->getSprite();
 			if (spriteRock->getBoundingBox().intersectsRect(spriteBullet->getBoundingBox())&& spriteRock->isVisible() && spriteBullet->isVisible()) {
 				
-				blue->setPosition(Vec2(spriteRock->getPosition().x, spriteRock->getPosition().y));
-				blue->setVisible(true);
+				/*blue->setPosition(Vec2(spriteRock->getPosition().x, spriteRock->getPosition().y));
+				blue->setVisible(true);*/
+				auto particle = CCParticleSystemQuad::create("Sprites/particle_texture.plist");
+				particle->setScale(0.7);
+				particle->setPosition(Vec2(spriteRock->getPosition().x, spriteRock->getPosition().y));
+				this->scene->addChild(particle);
 		
 				score++;
 				s = to_string(score);

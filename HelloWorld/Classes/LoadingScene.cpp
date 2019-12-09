@@ -54,7 +54,10 @@ bool LoadingScene::init()
 	auto moveLoading = MoveTo::create(3.0f, Vec2(9 * visibleSize.width / 10, visibleSize.height / 5));
 	loadingFrame->runAction(moveLoading);
 	loadingFrame->runAction(RepeatForever::create(animate));
-
+	auto particle = ParticleFireworks::create();
+	particle->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2));
+	particle->setScale(0.5);
+	addChild(particle);
 	auto spLogo = Sprite::createWithSpriteFrame(ResourceManager::getInstance()->getSpriteByID(7)->getSpriteFrame());
 	spLogo->setAnchorPoint(Vec2(0.5, 0.5));
 	spLogo->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2));
@@ -66,7 +69,7 @@ bool LoadingScene::init()
 	spLogo->runAction(scaleLogo);
 	
 
-	schedule(schedule_selector(LoadingScene::changeScene), 3.0f);
+	schedule(schedule_selector(LoadingScene::changeScene), 3.5f);
 	auto listener = EventListenerTouchOneByOne::create();
 	listener->onTouchBegan = [](Touch* touch, Event* event) {
 		auto scene = MainMenuScene::createScene();
