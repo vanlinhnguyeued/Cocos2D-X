@@ -1,14 +1,16 @@
-﻿#include "SimpleAudioEngine.h"
-#include "GamePlayScene.h"
+﻿#include "GamePlayScene.h"
 #include "MainMenuScene.h"
 #include "SettingScene.h"
 #include "ui/CocosGUI.h"
 #include "ResourceManager.h"
 #include <ctime>
-
+#include "SimpleAudioEngine.h"
+using namespace CocosDenshion;
 
 
 USING_NS_CC;
+auto bgrMusicMM = SimpleAudioEngine::getInstance();
+
 
 Scene* MainMenuScene::createScene()
 {
@@ -31,7 +33,8 @@ bool MainMenuScene::init()
 
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
-
+	//add music
+	bgrMusicMM->playBackgroundMusic("Sounds/title.mp3", true);
 	//Set background
 	auto bgrMainMenu = Sprite::createWithSpriteFrame(ResourceManager::getInstance()->getSpriteByID(0)->getSpriteFrame());
 	bgrMainMenu -> setPosition(Vec2(0, 0));
@@ -63,6 +66,7 @@ bool MainMenuScene::init()
 		{
 			auto GamePlayScene = GamePlayScene::createScene();
 			Director::getInstance()->replaceScene(TransitionFade::create(0.5f, GamePlayScene, Color3B(0, 0, 0)));
+			bgrMusicMM->stopBackgroundMusic();
 			break;
 		}
 		default:

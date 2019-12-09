@@ -2,9 +2,9 @@
 
 #include "LoadingScene.h"
 #include "MainMenuScene.h"
-#include "SimpleAudioEngine.h"
 #include "ui/CocosGUI.h"
 #include "ResourceManager.h"
+
 
 USING_NS_CC;
 
@@ -21,6 +21,7 @@ static void problemLoading(const char* filename)
 }
 
 // on "init" you need to initialize your instance
+
 bool LoadingScene::init()
 {
     //////////////////////////////
@@ -32,6 +33,8 @@ bool LoadingScene::init()
 
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
+	
+
 	
 
 	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Sprites/Loading/loading3.plist", "Sprites/Loading/loading3.png");
@@ -72,6 +75,7 @@ bool LoadingScene::init()
 	schedule(schedule_selector(LoadingScene::changeScene), 3.5f);
 	auto listener = EventListenerTouchOneByOne::create();
 	listener->onTouchBegan = [](Touch* touch, Event* event) {
+		
 		auto scene = MainMenuScene::createScene();
 		Director::getInstance()->replaceScene(TransitionFade::create(0.5f, scene, Color3B(0, 0, 0)));
 
