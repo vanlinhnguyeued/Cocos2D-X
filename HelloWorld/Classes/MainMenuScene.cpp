@@ -9,9 +9,9 @@ using namespace CocosDenshion;
 
 
 USING_NS_CC;
-auto bgrMusicMM = SimpleAudioEngine::getInstance();
 auto bgrMusicPlayGame = SimpleAudioEngine::getInstance();
 auto audioCf = SimpleAudioEngine::getInstance();
+auto bgrMusicMainMenu = SimpleAudioEngine::getInstance();
 Scene* MainMenuScene::createScene()
 {
     return MainMenuScene::create();
@@ -34,12 +34,10 @@ bool MainMenuScene::init()
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 	//add music
-	bgrMusicMM->playBackgroundMusic("Sounds/title.mp3", true);
-	bgrMusicMM->setBackgroundMusicVolume(0);
-	bgrMusicPlayGame->preloadBackgroundMusic("Sounds/ingame.mp3");
+	bgrMusicMainMenu->playBackgroundMusic("Sounds/title.mp3", true);
 	//Set background
 	auto bgrMainMenu = Sprite::createWithSpriteFrame(ResourceManager::getInstance()->getSpriteByID(0)->getSpriteFrame());
-	bgrMainMenu -> setPosition(Vec2(0, 0));
+	bgrMainMenu-> setPosition(Vec2(0, 0));
 	bgrMainMenu->setAnchorPoint(Vec2(0, 0));
 	auto targetSizeBGR = Size(visibleSize.width, visibleSize.height);
 	auto sizeOrigBgr = bgrMainMenu->getContentSize();
@@ -69,13 +67,10 @@ bool MainMenuScene::init()
 			
 		case ui::Widget::TouchEventType::ENDED:
 		{
+			bgrMusicMainMenu->stopBackgroundMusic();
 			auto GamePlayScene = GamePlayScene::createScene();
 			Director::getInstance()->replaceScene(TransitionFade::create(0.5f, GamePlayScene, Color3B(0, 0, 0)));
-			bgrMusicMM->stopBackgroundMusic();
-			
 			bgrMusicPlayGame->playBackgroundMusic("Sounds/ingame.mp3", true);
-			
-			bgrMusicPlayGame->setBackgroundMusicVolume(0.5);
 			break;
 		}
 		default:

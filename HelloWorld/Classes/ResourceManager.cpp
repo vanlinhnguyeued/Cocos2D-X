@@ -27,6 +27,16 @@ void ResourceManager::init(const string path)
 	this->m_HightScore = stoi(FileUtils::getInstance()->getStringFromFile("highScore.bin"));
 	m_dataFoderPath = path;
 	load(m_dataFoderPath);
+	auto audio = SimpleAudioEngine::getInstance();
+	audio->preloadBackgroundMusic("Sounds/title.mp3");
+	auto audio1 = SimpleAudioEngine::getInstance();
+	audio1->preloadBackgroundMusic("Sounds/ingame.mp3"); 
+	auto audio2 = SimpleAudioEngine::getInstance();
+	audio2->preloadBackgroundMusic("Sounds/killed.wav");
+	auto audio3 = SimpleAudioEngine::getInstance();
+	audio3->preloadBackgroundMusic("Sounds/fire.wav"); 
+	auto audio4 = SimpleAudioEngine::getInstance();
+	audio4->preloadBackgroundMusic("Sounds/confirm.wav");
 }
 
 void ResourceManager::load(string fileName)
@@ -108,7 +118,6 @@ void ResourceManager::load(string fileName)
 					j--;
 				}
 			}
-			
 		}
 	}
 
@@ -151,4 +160,5 @@ Label * ResourceManager::getLabelByID(int id)
 {
 	return m_Labels.at(id);
 }
+
 

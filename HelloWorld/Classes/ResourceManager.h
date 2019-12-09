@@ -1,8 +1,9 @@
-
+#include "SimpleAudioEngine.h"
 #include<string>
 #include "ui/CocosGUI.h"
 #include "cocos2d.h"
 USING_NS_CC;
+using namespace CocosDenshion;
 using namespace std;
 class ResourceManager
 {
@@ -15,6 +16,7 @@ private:
 	string m_Score;
 	int m_HightScore;
 	ResourceManager();
+
 	
 
 	

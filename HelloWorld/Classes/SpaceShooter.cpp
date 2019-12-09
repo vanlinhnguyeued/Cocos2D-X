@@ -116,10 +116,7 @@ void SpaceShooter::conllision(vector<Rock*> rock)
 	}
 	if (score == 10) {
 
-		auto map = TMXTiledMap::create("TileMaps/bg.tmx");
-		map->setPosition(Vec2(0,0));
-		map->setScaleX(0.7);
-		this->scene->addChild(map, 1);
+		
 
 	}
 }
