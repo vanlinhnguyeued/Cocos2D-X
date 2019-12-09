@@ -10,8 +10,8 @@ using namespace CocosDenshion;
 
 USING_NS_CC;
 auto bgrMusicMM = SimpleAudioEngine::getInstance();
-
 auto bgrMusicPlayGame = SimpleAudioEngine::getInstance();
+auto audioCf = SimpleAudioEngine::getInstance();
 Scene* MainMenuScene::createScene()
 {
     return MainMenuScene::create();
@@ -35,6 +35,8 @@ bool MainMenuScene::init()
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 	//add music
 	bgrMusicMM->playBackgroundMusic("Sounds/title.mp3", true);
+	bgrMusicMM->setBackgroundMusicVolume(0);
+	bgrMusicPlayGame->preloadBackgroundMusic("Sounds/ingame.mp3");
 	//Set background
 	auto bgrMainMenu = Sprite::createWithSpriteFrame(ResourceManager::getInstance()->getSpriteByID(0)->getSpriteFrame());
 	bgrMainMenu -> setPosition(Vec2(0, 0));
@@ -60,14 +62,20 @@ bool MainMenuScene::init()
 	btnNewGame->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
 		switch (type)
 		{
-		case ui::Widget::TouchEventType::BEGAN:
+		case ui::Widget::TouchEventType::BEGAN: {
+			audioCf->playEffect("Sounds/confirm.wav",false, 1.0f, 1.0f, 1.0f);
 			break;
+		}
+			
 		case ui::Widget::TouchEventType::ENDED:
 		{
 			auto GamePlayScene = GamePlayScene::createScene();
 			Director::getInstance()->replaceScene(TransitionFade::create(0.5f, GamePlayScene, Color3B(0, 0, 0)));
 			bgrMusicMM->stopBackgroundMusic();
-			bgrMusicPlayGame->playBackgroundMusic("Sounds/ingame.mp3");
+			
+			bgrMusicPlayGame->playBackgroundMusic("Sounds/ingame.mp3", true);
+			
+			bgrMusicPlayGame->setBackgroundMusicVolume(0.5);
 			break;
 		}
 		default:
@@ -86,7 +94,10 @@ bool MainMenuScene::init()
 	btnSetting->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
 		switch (type)
 		{
-		case ui::Widget::TouchEventType::BEGAN: break;
+		case ui::Widget::TouchEventType::BEGAN: {
+			audioCf->playEffect("Sounds/confirm.wav", false, 1.0f, 1.0f, 1.0f);
+			break;
+		}
 		case ui::Widget::TouchEventType::ENDED: {
 			auto sceneSetting = SettingScene::createScene();
 			Director::getInstance()->replaceScene(TransitionFade::create(0.5f, sceneSetting, Color3B(0, 0, 0)));

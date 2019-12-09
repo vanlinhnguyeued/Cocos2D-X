@@ -4,12 +4,13 @@
 #include <math.h>
 #include "ResourceManager.h"
 #include <ctime>
-
-using namespace cocos2d::ui;
-
+using namespace CocosDenshion;
 
 
 USING_NS_CC;
+
+
+
 
 static float a = 0;
 SpaceShooter* spaceShooter;
@@ -81,6 +82,7 @@ void GamePlayScene::update(float deltaTime) {
 	this->generateRock(deltaTime);
 	spaceShooter->update(deltaTime);
 	spaceShooter->conllision(m_Rocks);
+	
 }
 
 void GamePlayScene::generateRock(float deltaTime)

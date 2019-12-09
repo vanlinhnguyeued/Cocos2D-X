@@ -3,13 +3,13 @@
 #include "ui/CocosGUI.h"
 #include "MainMenuScene.h"
 #include "ResourceManager.h"
-
-using namespace cocos2d::ui;
-
+using namespace CocosDenshion;
 
 
 USING_NS_CC;
 
+
+auto audioCf1 = SimpleAudioEngine::getInstance();
 static cocos2d::LayerColor* soundLayer;
 static cocos2d::LayerColor* aboutLayer;
 
@@ -84,7 +84,7 @@ bool SettingScene::init()
 		switch (type)
 		{
 		case ui::Widget::TouchEventType::BEGAN: {
-
+			audioCf1->playEffect("Sounds/confirm.wav", false, 1.0f, 1.0f, 1.0f);
 			break;
 		}
 

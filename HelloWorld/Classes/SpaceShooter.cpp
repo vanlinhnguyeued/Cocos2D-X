@@ -2,7 +2,11 @@
 #include"Bullet.h"
 #include "GameOverScene.h"
 #include "ResourceManager.h"
+#include"SimpleAudioEngine.h"
+using namespace CocosDenshion;
 using namespace std;
+auto audioKilled = SimpleAudioEngine::getInstance();
+
 
 static float a = 0;
 int score = 0;
@@ -63,8 +67,9 @@ void SpaceShooter::shoot(float deltaTime)
 			this->m_Bullets[i]->getSprite()->stopAllActions();
 			this->m_Bullets[i]->getSprite()->setVisible(false);
 			this->m_Bullets[i]->getSprite()->setPosition(this->getSprite()->getPosition().x, this->getSprite()->getPosition().y);
+			
 		}
-		if (this->m_Bullets[i]->getSprite()->isVisible() == false && a > deltaTime * 8) {
+		if (this->m_Bullets[i]->getSprite()->isVisible() == false && a > deltaTime * 20) {
 			this->m_Bullets[i]->getSprite()->setVisible(true);
 			this->m_Bullets[i]->getSprite()->setPosition(this->getSprite()->getPosition().x, this->getSprite()->getPosition().y);
 			this->m_Bullets[i]->update(deltaTime);
@@ -75,31 +80,13 @@ void SpaceShooter::shoot(float deltaTime)
 }
 Sprite* blue;
 void SpaceShooter::conllision(vector<Rock*> rock)
-{/*
-	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Sprites/Blue/blue.plist", "Sprites/Blue/blue.png");
-	blue = Sprite::createWithSpriteFrameName("1_16.png");
-	char loadingFrameByName1[30];
-	Vector<SpriteFrame*> blueship;
-	for (int i = 0; i < 17; i++)
-	{
-		sprintf(loadingFrameByName1, "1_%d.png", i);
-		auto frame1 = SpriteFrameCache::getInstance()->getSpriteFrameByName(loadingFrameByName1);
-		blueship.pushBack(frame1);
-	}
-	Animation* animation = Animation::createWithSpriteFrames(blueship, 0.05f);
-	Animate* animate = Animate::create(animation);
-	blue->setAnchorPoint(Vec2(0.5, 0.5));
-	blue->runAction(Repeat::create(animate->clone(), 1));
-	blue->setVisible(false);
-	this->scene->addChild(blue);*/
+{
 	for (int i = 0; i < rock.size(); i++) {
 		auto spriteRock = rock[i]->getSprite();
-		for (int j = 1; j < m_Bullets.size(); j++) {
-			auto spriteBullet = m_Bullets[i]->getSprite();
-			if (spriteRock->getBoundingBox().intersectsRect(spriteBullet->getBoundingBox())&& spriteRock->isVisible() && spriteBullet->isVisible()) {
-				
-				/*blue->setPosition(Vec2(spriteRock->getPosition().x, spriteRock->getPosition().y));
-				blue->setVisible(true);*/
+		for (int j = 0; j < m_Bullets.size(); j++) {
+			auto spriteBullet = m_Bullets[j]->getSprite();
+			if (spriteBullet->getBoundingBox().intersectsRect(spriteRock->getBoundingBox())&& spriteRock->isVisible() && spriteBullet->isVisible()) {
+				audioKilled->playEffect("Sounds/killed.wav", false, 1.0f, 1.0f, 1.0f);
 				auto particle = CCParticleSystemQuad::create("Sprites/particle_texture.plist");
 				particle->setScale(0.7);
 				particle->setPosition(Vec2(spriteRock->getPosition().x, spriteRock->getPosition().y));
