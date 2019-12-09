@@ -4,7 +4,6 @@
 #include "ResourceManager.h"
 #include "MainMenuScene.h"
 #include "GamePlayScene.h"
-
 using namespace cocos2d::ui;
 
 
@@ -34,7 +33,9 @@ bool GameOverScene::init()
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
 	//create background
-	auto bgrMainBGR = Sprite::createWithSpriteFrame(ResourceManager::getInstance()->getSpriteByID(0)->getSpriteFrame());
+	log("asd");
+	auto bgrMainBGR = ResourceManager::getInstance()->getSpriteByID(0);
+	bgrMainBGR->removeFromParent();
 	bgrMainBGR->setPosition(Vec2(0, 0));
 	bgrMainBGR->setAnchorPoint(Vec2(0, 0));
 	auto targetSizeBGR = Size(visibleSize.width, visibleSize.height);
@@ -70,8 +71,8 @@ bool GameOverScene::init()
 	addChild(lbHscore);
 	FileUtils::getInstance()->writeStringToFile(to_string(ResourceManager::getInstance()->getHighScore()), "highScore.bin");
 
-	//ResourceManager::getInstance()->getButtonByID(2)
-	auto btnBackHome = ui::Button::create("Buttons/home_normal.png", "Buttons/home_pressed.png", "Buttons/home_normal.png");
+	auto btnBackHome = ResourceManager::getInstance()->getButtonByID(2);
+	btnBackHome->removeFromParent();
 	btnBackHome->setAnchorPoint(Vec2(0.5, 0.5));
 	btnBackHome->setPosition(Vec2(visibleSize.width*0.35, visibleSize.height*0.4));
 	btnBackHome->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
@@ -97,6 +98,7 @@ bool GameOverScene::init()
 	auto targetSizebtnBackHome = Size(50, 50);
 	auto sizeOrigbtnBackHome = btnBackHome->getContentSize();
 	btnBackHome->setScale((targetSizebtnBackHome.width / sizeOrigbtnBackHome.width), (targetSizebtnBackHome.height / sizeOrigbtnBackHome.height));
+	
 	addChild(btnBackHome);
 
 	auto btnRS = ui::Button::create("Buttons/resume_normal.png", "Buttons/resume_pressed.png", "Buttons/resume_normal.png");

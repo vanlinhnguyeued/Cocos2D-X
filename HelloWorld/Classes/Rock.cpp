@@ -7,7 +7,7 @@
 
 Rock::Rock(Scene * scene)
 {
-	Sprite* rockItem = Sprite::createWithSpriteFrame(ResourceManager::getInstance()->getSpriteByID(3)->getSpriteFrame());
+	Sprite* rockItem = DuplicateSprite(ResourceManager::getInstance()->getSpriteByID(3));
 	this->setSprite(rockItem);
 }
 

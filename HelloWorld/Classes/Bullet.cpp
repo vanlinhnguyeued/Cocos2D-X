@@ -6,7 +6,7 @@ using namespace CocosDenshion;
 auto audioFire = SimpleAudioEngine::getInstance();
 Bullet::Bullet(cocos2d::Scene * scene)
 {
-	Sprite* bullet = Sprite::createWithSpriteFrame(ResourceManager::getInstance()->getSpriteByID(2)->getSpriteFrame());
+	Sprite* bullet = DuplicateSprite(ResourceManager::getInstance()->getSpriteByID(2));
 	this->setSprite(bullet);
 }
 

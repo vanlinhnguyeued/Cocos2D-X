@@ -61,7 +61,7 @@ bool LoadingScene::init()
 	particle->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2));
 	particle->setScale(0.5);
 	addChild(particle);
-	auto spLogo = Sprite::createWithSpriteFrame(ResourceManager::getInstance()->getSpriteByID(7)->getSpriteFrame());
+	auto spLogo = ResourceManager::getInstance()->getSpriteByID(7);
 	spLogo->setAnchorPoint(Vec2(0.5, 0.5));
 	spLogo->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2));
 	addChild(spLogo);

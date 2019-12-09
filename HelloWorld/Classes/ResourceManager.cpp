@@ -72,8 +72,9 @@ void ResourceManager::load(string fileName)
 				iis >> text >> numOfImage;
 				string s2 = numOfImage;
 				Sprite* sprite = Sprite::create(s2);
+				sprite->retain();
 				m_Sprites.insert(s1, sprite);
-
+				
 				j--;
 			}
 		}
@@ -95,6 +96,7 @@ void ResourceManager::load(string fileName)
 				iiis >> text >> numOfImage;
 				string s3 = numOfImage;
 				ui::Button* button = ui::Button::create(s2, s3, s2);
+				button->retain();
 				m_Buttons.insert(s1, button);
 
 				j--;

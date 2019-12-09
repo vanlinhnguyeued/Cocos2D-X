@@ -105,18 +105,15 @@ void SpaceShooter::conllision(vector<Rock*> rock)
 				if (score > ResourceManager::getInstance()->getHighScore()) {
 					ResourceManager::getInstance()->setHighScore(score);
 				}
-					
-				score = 0;
 				auto scene = GameOverScene::createScene();
-				Director::getInstance()->replaceScene(TransitionFade::create(0.5f, scene, Color3B(0, 0, 0)));
+				Director::getInstance()->replaceScene(scene);
+				break;
+				//this->getSprite()->setVisible(false);
+				score = 0;
 
 			}
 			
 		}
 	}
-	if (score == 10) {
-
-		
-
-	}
+	
 }

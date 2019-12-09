@@ -4,6 +4,7 @@
 #include <math.h>
 #include "ResourceManager.h"
 #include <ctime>
+#include <GameOverScene.h>
 using namespace CocosDenshion;
 
 
@@ -37,7 +38,8 @@ bool GamePlayScene::init()
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
 	//create background
-	auto bgrMainBGR = Sprite::createWithSpriteFrame(ResourceManager::getInstance()->getSpriteByID(0)->getSpriteFrame());
+	auto bgrMainBGR =ResourceManager::getInstance()->getSpriteByID(0);
+	bgrMainBGR->removeFromParent();
 	bgrMainBGR->setPosition(Vec2(0, 0));
 	bgrMainBGR->setAnchorPoint(Vec2(0, 0));
 	auto targetSizeBGR = Size(visibleSize.width, visibleSize.height);
@@ -79,9 +81,10 @@ bool GamePlayScene::init()
 }
 
 void GamePlayScene::update(float deltaTime) {
-	this->generateRock(deltaTime);
-	spaceShooter->update(deltaTime);
-	spaceShooter->conllision(m_Rocks);
+	
+		this->generateRock(deltaTime);
+		spaceShooter->update(deltaTime);
+		spaceShooter->conllision(m_Rocks);
 	
 }
 

@@ -36,16 +36,17 @@ bool MainMenuScene::init()
 	//add music
 	bgrMusicMainMenu->playBackgroundMusic("Sounds/title.mp3", true);
 	//Set background
-	auto bgrMainMenu = Sprite::createWithSpriteFrame(ResourceManager::getInstance()->getSpriteByID(0)->getSpriteFrame());
+	auto bgrMainMenu = ResourceManager::getInstance()->getSpriteByID(0);
 	bgrMainMenu-> setPosition(Vec2(0, 0));
 	bgrMainMenu->setAnchorPoint(Vec2(0, 0));
 	auto targetSizeBGR = Size(visibleSize.width, visibleSize.height);
 	auto sizeOrigBgr = bgrMainMenu->getContentSize();
 	bgrMainMenu->setScale((targetSizeBGR.width / sizeOrigBgr.width), (targetSizeBGR.height / sizeOrigBgr.height));
+	bgrMainMenu->removeFromParent();
 	addChild(bgrMainMenu);
 
 	//setSprite logo
-	auto logoGame = Sprite::createWithSpriteFrame(ResourceManager::getInstance()->getSpriteByID(1)->getSpriteFrame());
+	auto logoGame = ResourceManager::getInstance()->getSpriteByID(1);
 	logoGame->setAnchorPoint(Vec2(0.5, 0.5));
 	logoGame->setPosition(Vec2(visibleSize.width / 2, 500));
 	auto targetSizeLogo = Size(250, 200);
