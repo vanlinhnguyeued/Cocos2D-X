@@ -7,7 +7,6 @@ using namespace CocosDenshion;
 using namespace std;
 auto audioKilled = SimpleAudioEngine::getInstance();
 
-
 static float a = 0;
 int score = 0;
 string s;
@@ -112,7 +111,15 @@ void SpaceShooter::conllision(vector<Rock*> rock)
 				Director::getInstance()->replaceScene(TransitionFade::create(0.5f, scene, Color3B(0, 0, 0)));
 
 			}
+			
 		}
 	}
+	if (score == 10) {
 
+		auto map = TMXTiledMap::create("TileMaps/bg.tmx");
+		map->setPosition(Vec2(0,0));
+		map->setScaleX(0.7);
+		this->scene->addChild(map, 1);
+
+	}
 }
