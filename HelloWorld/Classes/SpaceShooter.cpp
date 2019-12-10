@@ -3,6 +3,7 @@
 #include "GameOverScene.h"
 #include "ResourceManager.h"
 #include"SimpleAudioEngine.h"
+#include"GamePlaySceneLV2.h"
 using namespace CocosDenshion;
 using namespace std;
 auto audioKilled = SimpleAudioEngine::getInstance();
@@ -92,8 +93,6 @@ void SpaceShooter::shoot(float deltaTime)
 
 void SpaceShooter::conllision(vector<Rock*> rock)
 {
-	
-	
 
 	for (int i = 0; i < rock.size(); i++) {
 		auto spriteRock = rock[i]->getSprite();
@@ -120,21 +119,63 @@ void SpaceShooter::conllision(vector<Rock*> rock)
 				if (score > ResourceManager::getInstance()->getHighScore()) {
 					ResourceManager::getInstance()->setHighScore(score);
 				}
-				auto scene = GameOverScene::createScene();
-				Director::getInstance()->replaceScene(scene);
-				break;
+				auto sceneGOV = GameOverScene::createScene();
+				Director::getInstance()->replaceScene(sceneGOV);
 				score = 0;
+				break;
+				
 
 			}
-			if (score == 20&&!map1->isVisible()) {
+			if (score == 20 && map1->isVisible()==false) {
 				map1->setVisible(true);
 				auto moveTo = MoveTo::create(4.0f, Vec2(0, 0));
 				map1->runAction(moveTo);
+				
+			}
+			if (map1->getPosition().y ==0) {
+				auto sceneGPL2 = GamePlaySceneLV2::createScene();
+				Director::getInstance()->replaceScene(sceneGPL2);
 			}
 		}
 	}
 	
 }
-void SpaceShooter::initMap() {
+void SpaceShooter::conllisionlv2(vector<Rock*> rock)
+{
+
+	for (int i = 0; i < rock.size(); i++) {
+		auto spriteRock = rock[i]->getSprite();
+		for (int j = 0; j < m_Bullets.size(); j++) {
+			auto spriteBullet = m_Bullets[j]->getSprite();
+			if (spriteBullet->getBoundingBox().intersectsRect(spriteRock->getBoundingBox()) && spriteRock->isVisible() && spriteBullet->isVisible()) {
+				audioKilled->playEffect("Sounds/killed.wav", false, 1.0f, 1.0f, 1.0f);
+				auto particle = CCParticleSystemQuad::create("Sprites/particle_texture.plist");
+				particle->setScale(0.7);
+				particle->setPosition(Vec2(spriteRock->getPosition().x, spriteRock->getPosition().y));
+				this->scene->addChild(particle);
+
+				score++;
+				s = to_string(score);
+				lbscore->setString(s);
+				spriteRock->setPosition(spriteRock->getPosition().x, -10);
+				spriteBullet->setPosition(spriteBullet->getPosition().x, 700);
+				spriteBullet->setVisible(false);
+				spriteRock->setVisible(false);
+
+			}
+			if (spriteRock->getBoundingBox().intersectsRect(this->getSprite()->getBoundingBox()) && spriteRock->isVisible()) {
+				ResourceManager::getInstance()->setScore(s);
+				if (score > ResourceManager::getInstance()->getHighScore()) {
+					ResourceManager::getInstance()->setHighScore(score);
+				}
+				auto sceneGOV = GameOverScene::createScene();
+				Director::getInstance()->replaceScene(sceneGOV);
+				score = 0;
+				break;
+				
+
+			}
+		}
+	}
 
 }

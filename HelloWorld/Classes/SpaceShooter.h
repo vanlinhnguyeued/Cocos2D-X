@@ -1,6 +1,7 @@
 #pragma once
 #include "ui/CocosGUI.h"
 #include "cocos2d.h"
+#pragma once
 #include "Objects.h"
 #include "Rock.h"
 using namespace std;
@@ -13,7 +14,7 @@ public:
 	void update(float deltaTime);
 	void shoot(float deltaTime);
 	void conllision(vector<Rock*>);
-	void initMap();
+	void conllisionlv2(vector<Rock*> rock);
 private:
 	vector<Objects*> m_Bullets;
 	Scene* scene;

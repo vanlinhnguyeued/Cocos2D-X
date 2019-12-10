@@ -1,4 +1,4 @@
-
+#pragma once
 
 #ifndef __LOGO_SCENE_H__
 #define __LOGO_SCENE_H__

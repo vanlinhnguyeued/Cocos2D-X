@@ -1,3 +1,4 @@
+#pragma once
 #include "SimpleAudioEngine.h"
 #include<string>
 #include "ui/CocosGUI.h"
